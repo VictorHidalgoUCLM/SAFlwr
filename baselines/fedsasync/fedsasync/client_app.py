@@ -1,5 +1,7 @@
 """baseline: A Flower Baseline."""
 
+import random
+import time
 import torch
 from flwr.app import ArrayRecord, Context, Message, MetricRecord, RecordDict
 from flwr.clientapp import ClientApp
@@ -27,6 +29,13 @@ def train(msg: Message, context: Context):
     num_partitions = int(context.node_config["num-partitions"])
     trainloader, _ = load_data(partition_id, num_partitions)
     local_epochs = context.run_config["local-epochs"]
+
+    # Probability of being a slow client, for simulating stragglers in FedSaSync
+    fraction_slow = float(context.run_config["fraction-slow"])
+    straggler = random.random() < fraction_slow
+
+    if straggler:
+        time.sleep(5)
 
     # Call the training function
     train_loss = train_fn(
