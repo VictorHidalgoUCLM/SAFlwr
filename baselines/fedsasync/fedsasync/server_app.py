@@ -3,7 +3,7 @@
 import torch
 from flwr.app import ArrayRecord, Context
 from flwr.serverapp import Grid, ServerApp
-from flwr.serverapp.strategy import FedAvg
+from .strategy import FedSaSync
 
 from fedsasync.model import Net
 
@@ -22,14 +22,14 @@ def main(grid: Grid, context: Context) -> None:
     global_model = Net()
     arrays = ArrayRecord(global_model.state_dict())
 
-    # Initialize FedAvg strategy
-    strategy = FedAvg(
+    # Initialize FedSaSync strategy
+    strategy = FedSaSync(
         fraction_train=fraction_train,
         fraction_evaluate=1.0,
         min_available_nodes=2,
     )
 
-    # Start strategy, run FedAvg for `num_rounds`
+    # Start strategy, run FedSaSync for `num_rounds`
     result = strategy.start(
         grid=grid,
         initial_arrays=arrays,
