@@ -17,6 +17,8 @@ def main(grid: Grid, context: Context) -> None:
     # Read from config
     num_rounds: int = int(context.run_config["num-server-rounds"])
     fraction_train: float = float(context.run_config["fraction-train"])
+    fraction_evaluate: float = float(context.run_config["fraction-evaluate"])
+    strategy_name: str = context.run_config["name"]
 
     # Load global model
     global_model = Net()
@@ -25,8 +27,9 @@ def main(grid: Grid, context: Context) -> None:
     # Initialize FedSaSync strategy
     strategy = FedSaSync(
         fraction_train=fraction_train,
-        fraction_evaluate=1.0,
+        fraction_evaluate=fraction_evaluate,
         min_available_nodes=2,
+        strategy_name=strategy_name,
     )
 
     # Start strategy, run FedSaSync for `num_rounds`

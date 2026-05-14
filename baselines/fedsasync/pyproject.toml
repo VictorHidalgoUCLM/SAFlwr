@@ -131,36 +131,9 @@ clientapp = "fedsasync.client_app:app"
 
 # Custom config values accessible via `context.run_config`
 [tool.flwr.app.config]
-num-server-rounds = 3
-fraction-train = 0.5
+name = "FedAvg"
+num-server-rounds = 100
+fraction-train = 1.0
+fraction-evaluate = 1.0
 local-epochs = 1
-
-# Default federation to use when running the app
-
-#######################################################################
-# CONFIGURATION MIGRATION NOTICE:
-#
-# What was previously called "federation config" for SuperLink
-# connections in pyproject.toml has been renamed and moved.
-#
-# These settings are now **SuperLink connection configuration**
-# and are defined in the Flower configuration file.
-#
-# The entries below are commented out intentionally and are kept
-# only as a migration reference.
-#
-# Docs: https://flower.ai/docs/framework/ref-flower-configuration.html
-#######################################################################
-
-# [tool.flwr.federations]
-# default = "local-simulation"
-
-# # Local simulation federation with 10 virtual SuperNodes
-# [tool.flwr.federations.local-simulation]
-# options.num-supernodes = 10
-# options.backend.client-resources.num-cpus = 2
-# options.backend.client-resources.num-gpus = 0.0
-
-# [tool.flwr.federations.supergrid-deployment]
-# address = "supergrid.flower.ai"
-# enable-account-auth = true
+num-clients = 8

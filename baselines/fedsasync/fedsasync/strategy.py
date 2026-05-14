@@ -75,6 +75,7 @@ class FedSaSync(FedAvg):
         configrecord_key: str = "config",
         train_metrics_aggr_fn=None,
         evaluate_metrics_aggr_fn=None,
+        strategy_name: str = "FedAvg",
 
         # Additional parameters for FedSaSync if needed
 
@@ -91,6 +92,8 @@ class FedSaSync(FedAvg):
             train_metrics_aggr_fn=train_metrics_aggr_fn,
             evaluate_metrics_aggr_fn=evaluate_metrics_aggr_fn,
         )
+
+        self.strategy_name = strategy_name
 
         # Additional initialization for FedSaSync if needed
 
@@ -165,7 +168,7 @@ class FedSaSync(FedAvg):
             Results containing final model arrays and also training metrics, evaluation
             metrics and global evaluation metrics (if provided) from all rounds.
         """
-        log(INFO, "Starting %s strategy:", self.__class__.__name__)
+        log(INFO, "Starting %s strategy:", self.strategy_name)
         log_strategy_start_info(
             num_rounds, initial_arrays, train_config, evaluate_config
         )
