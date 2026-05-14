@@ -19,7 +19,13 @@ app = ClientApp()
 def train(msg: Message, context: Context):
     """Train the model on local data."""
     # Load the model and initialize it with the received weights
-    model = Net()
+    dataset_name = context.run_config["dataset-name"]
+    if dataset_name == "uoft-cs/cifar10":
+        model = Net()
+        image = "img"
+    elif dataset_name == "ylecun/mnist":
+        model = Net(input_channels=1, pool_size=4)
+        image = "image"
     arrays = msg.content.array_records["arrays"]
     model.load_state_dict(arrays.to_torch_state_dict())
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -27,7 +33,7 @@ def train(msg: Message, context: Context):
     # Load the data
     partition_id = int(context.node_config["partition-id"])
     num_partitions = int(context.node_config["num-partitions"])
-    trainloader, _ = load_data(partition_id, num_partitions)
+    trainloader, _ = load_data(partition_id, num_partitions, dataset_name)
     local_epochs = context.run_config["local-epochs"]
 
     # Probability of being a slow client, for simulating stragglers in FedSaSync
@@ -43,6 +49,7 @@ def train(msg: Message, context: Context):
         trainloader,
         local_epochs,
         device,
+        image
     )
 
     # Construct and return reply Message
@@ -60,7 +67,13 @@ def train(msg: Message, context: Context):
 def evaluate(msg: Message, context: Context):
     """Evaluate the model on local data."""
     # Load the model and initialize it with the received weights
-    model = Net()
+    dataset_name = context.run_config["dataset-name"]
+    if dataset_name == "uoft-cs/cifar10":
+        model = Net()
+        image = "img"
+    elif dataset_name == "ylecun/mnist":
+        model = Net(input_channels=1, pool_size=4)
+        image = "image"
     arrays = msg.content.array_records["arrays"]
     model.load_state_dict(arrays.to_torch_state_dict())
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -71,7 +84,7 @@ def evaluate(msg: Message, context: Context):
     _, valloader = load_data(partition_id, num_partitions)
 
     # Call the evaluation function
-    eval_loss, eval_acc = test_fn(model, valloader, device)
+    eval_loss, eval_acc = test_fn(model, valloader, device, image)
 
     # Construct and return reply Message
     metrics = {

@@ -170,6 +170,7 @@ class FedSaSync(FedAvg):
         timeout: float | None = None,
         msg_dict: Dict[str, str] = {},
         sync_deg: int = 1,
+        last_round: bool = False,
     ) -> Iterable[Message]:
         """Push messages to specified node IDs and pull semiasynchronously 'M' reply messages.
 
@@ -186,7 +187,7 @@ class FedSaSync(FedAvg):
         del messages
 
         # Debug mode: print the msg_dict after pushing messages
-        print("msg_dict:", msg_dict)
+        # print("msg_dict:", msg_dict)
         
         # Pull messages
         all_msg_ids = set(msg_dict.values())    # Get all message IDs that are currently running
@@ -198,10 +199,13 @@ class FedSaSync(FedAvg):
             all_msg_ids.difference_update(
                 {msg.metadata.reply_to_message_id for msg in res_msgs}
             )
-            # Round end condition: semiaysynchronous round
-            # Allow the system to continue if at least M replies have been received
-            if len(ret) >= sync_deg:
-                break
+            # Round end condition
+            if not last_round:  # If not last round, continue if at least M replies have been received
+                if len(ret) >= sync_deg:
+                    break
+            else:   # If last round, wait all executing clients
+                if len(all_msg_ids) == 0:
+                    break
             # Sleep
             time.sleep(3)
 
@@ -211,7 +215,7 @@ class FedSaSync(FedAvg):
                 del msg_dict[node_id]
 
         # Debug mode: print the msg_dict after pulling messages
-        print("msg_dict after pulling:", msg_dict)
+        # print("msg_dict after pulling:", msg_dict)
         return ret
 
 
@@ -298,12 +302,12 @@ class FedSaSync(FedAvg):
             # For FedSaSync, sync_deg is determined by the semiasync_deg parameter (semi-asynchronous)
             sync_deg = min(self.semiasync_deg, train_clients)
 
-        print("Sync degree:", sync_deg)
+        # print("Sync degree:", sync_deg)
 
         for current_round in range(1, num_rounds + 1):
             log(INFO, "")
             log(INFO, "[ROUND %s/%s]", current_round, num_rounds)
-
+            last_round = (current_round == num_rounds)
             # -----------------------------------------------------------------
             # --- TRAINING (CLIENTAPP-SIDE) -----------------------------------
             # -----------------------------------------------------------------
@@ -321,7 +325,8 @@ class FedSaSync(FedAvg):
                 ),
                 timeout=timeout,
                 msg_dict=msg_dict,
-                sync_deg=sync_deg
+                sync_deg=sync_deg,
+                last_round=last_round,
             )
 
             # Aggregate train

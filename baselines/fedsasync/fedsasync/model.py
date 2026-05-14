@@ -8,12 +8,13 @@ from torch import nn
 class Net(nn.Module):
     """Model (simple CNN adapted from 'PyTorch: A 60 Minute Blitz')."""
 
-    def __init__(self):
+    def __init__(self, input_channels=3, pool_size=5):
+        self.pool_size = pool_size
         super().__init__()
-        self.conv1 = nn.Conv2d(3, 6, 5)
+        self.conv1 = nn.Conv2d(input_channels, 6, 5)
         self.pool = nn.MaxPool2d(2, 2)
         self.conv2 = nn.Conv2d(6, 16, 5)
-        self.fc1 = nn.Linear(16 * 5 * 5, 120)
+        self.fc1 = nn.Linear(16 * pool_size * pool_size, 120)
         self.fc2 = nn.Linear(120, 84)
         self.fc3 = nn.Linear(84, 10)
 
@@ -21,13 +22,13 @@ class Net(nn.Module):
         """Do forward."""
         x = self.pool(F.relu(self.conv1(x)))
         x = self.pool(F.relu(self.conv2(x)))
-        x = x.view(-1, 16 * 5 * 5)
+        x = x.view(-1, 16 * self.pool_size * self.pool_size)
         x = F.relu(self.fc1(x))
         x = F.relu(self.fc2(x))
         return self.fc3(x)
 
 
-def train(net, trainloader, epochs, device):
+def train(net, trainloader, epochs, device, img):
     """Train the model on the training set."""
     net.to(device)  # move model to GPU if available
     criterion = torch.nn.CrossEntropyLoss()
@@ -37,7 +38,7 @@ def train(net, trainloader, epochs, device):
     running_loss = 0.0
     for _ in range(epochs):
         for batch in trainloader:
-            images = batch["img"]
+            images = batch[img]
             labels = batch["label"]
             optimizer.zero_grad()
             loss = criterion(net(images.to(device)), labels.to(device))
@@ -49,14 +50,14 @@ def train(net, trainloader, epochs, device):
     return avg_trainloss
 
 
-def test(net, testloader, device):
+def test(net, testloader, device, img):
     """Validate the model on the test set."""
     net.to(device)
     criterion = torch.nn.CrossEntropyLoss()
     correct, loss = 0, 0.0
     with torch.no_grad():
         for batch in testloader:
-            images = batch["img"].to(device)
+            images = batch[img].to(device)
             labels = batch["label"].to(device)
             outputs = net(images)
             loss += criterion(outputs, labels).item()

@@ -138,3 +138,4 @@ fraction-evaluate = 0.0
 local-epochs = 1
 semiasync-deg = 10
 fraction-slow = 0.0
+dataset-name = "uoft-cs/cifar10"

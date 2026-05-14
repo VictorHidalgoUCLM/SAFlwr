@@ -8,26 +8,32 @@ from torchvision.transforms import Compose, Normalize, ToTensor
 FDS = None  # Cache FederatedDataset
 
 
-def load_data(partition_id: int, num_partitions: int):
+def load_data(partition_id: int, num_partitions: int, dataset_name: str = "uoft-cs/cifar10"):
     """Load partition CIFAR10 data."""
     # Only initialize `FederatedDataset` once
     global FDS  # pylint: disable=global-statement
     if FDS is None:
         partitioner = IidPartitioner(num_partitions=num_partitions)
         FDS = FederatedDataset(
-            dataset="uoft-cs/cifar10",
+            dataset=dataset_name,
             partitioners={"train": partitioner},
         )
     partition = FDS.load_partition(partition_id)
     # Divide data on each node: 80% train, 20% test
     partition_train_test = partition.train_test_split(test_size=0.2, seed=42)
-    pytorch_transforms = Compose(
-        [ToTensor(), Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))]
-    )
 
+    if dataset_name == "uoft-cs/cifar10":
+        pytorch_transforms = Compose(
+            [ToTensor(), Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))]
+        )
+    elif dataset_name == "ylecun/mnist":
+        pytorch_transforms = Compose(
+            [ToTensor(), Normalize((0.1307,), (0.3081,))]
+        )
     def apply_transforms(batch):
         """Apply transforms to the partition from FederatedDataset."""
-        batch["img"] = [pytorch_transforms(img) for img in batch["img"]]
+        image = "img" if dataset_name == "uoft-cs/cifar10" else "image"
+        batch[image] = [pytorch_transforms(img) for img in batch[image]]
         return batch
 
     partition_train_test = partition_train_test.with_transform(apply_transforms)

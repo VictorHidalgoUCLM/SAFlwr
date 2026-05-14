@@ -20,9 +20,13 @@ def main(grid: Grid, context: Context) -> None:
     fraction_evaluate: float = float(context.run_config["fraction-evaluate"])
     strategy_name: str = context.run_config["name"]
     semiasync_deg: int = int(context.run_config.get("semiasync-deg", 10))
+    dataset_name: str = context.run_config["dataset-name"]
 
     # Load global model
-    global_model = Net()
+    if dataset_name == "uoft-cs/cifar10":
+        global_model = Net()
+    elif dataset_name == "ylecun/mnist":
+        global_model = Net(1, 4)
     arrays = ArrayRecord(global_model.state_dict())
 
     # Initialize FedSaSync strategy
