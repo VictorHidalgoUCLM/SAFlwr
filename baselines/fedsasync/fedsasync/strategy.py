@@ -59,6 +59,10 @@ class FedSaSync(FedAvg):
         used to aggregate MetricRecords from training round replies.
         If `None`, defaults to `aggregate_metricrecords`, which performs a weighted
         average using the provided weight factor key.
+    strategy_name : str (default: "FedAvg")
+        Name of the strategy.
+    semiasync_deg : int (default: 8)
+        Degree of semi-asynchrony.
     """
 
     # pylint: disable=too-many-arguments,too-many-positional-arguments
@@ -75,9 +79,10 @@ class FedSaSync(FedAvg):
         configrecord_key: str = "config",
         train_metrics_aggr_fn=None,
         evaluate_metrics_aggr_fn=None,
-        strategy_name: str = "FedAvg",
 
         # Additional parameters for FedSaSync if needed
+        strategy_name: str = "FedAvg",
+        semiasync_deg: int = 10,
 
     ) -> None:
         super().__init__(
@@ -93,9 +98,9 @@ class FedSaSync(FedAvg):
             evaluate_metrics_aggr_fn=evaluate_metrics_aggr_fn,
         )
 
-        self.strategy_name = strategy_name
-
         # Additional initialization for FedSaSync if needed
+        self.strategy_name = strategy_name
+        self.semiasync_deg = semiasync_deg
 
     # Overwrite of FedAvg configure_train to implement semi-asynchronous sampling
     def configure_train(
@@ -106,7 +111,9 @@ class FedSaSync(FedAvg):
         if self.fraction_train == 0.0:
             return []
         # Sample nodes semiasynchronously, based on current execution state of nodes
-        node_ids, num_total = _sample_nodes_semiasync(grid, msg_dict)
+        num_nodes = int(len(list(grid.get_node_ids())) * self.fraction_train)
+        sample_size = max(num_nodes, self.min_train_nodes)
+        node_ids, num_total = _sample_nodes_semiasync(grid, msg_dict, sample_size)
         log(
             INFO,
             "configure_train: Sampled %s nodes (out of %s)",
@@ -192,6 +199,21 @@ class FedSaSync(FedAvg):
 
         # List of messages running in grid
         msg_dict: Dict[str, str] = {}
+        
+        # Select sync_deg based on strategy name
+        train_clients = max(
+            int(self.fraction_train * int(len(list(grid.get_node_ids())))),
+            self.min_train_nodes,
+        )
+
+        if self.strategy_name == "FedAvg":
+            # For FedAvg, sync_deg is equal to the number of training clients (fully synchronous)
+            sync_deg = train_clients
+        elif self.strategy_name == "FedSaSync":
+            # For FedSaSync, sync_deg is determined by the semiasync_deg parameter (semi-asynchronous)
+            sync_deg = min(self.semiasync_deg, train_clients)
+
+        print("Sync degree:", sync_deg)
 
         for current_round in range(1, num_rounds + 1):
             log(INFO, "")
@@ -214,7 +236,7 @@ class FedSaSync(FedAvg):
                 ),
                 timeout=timeout,
                 msg_dict=msg_dict,
-                sync_deg=7
+                sync_deg=sync_deg
             )
 
             # Aggregate train

@@ -19,6 +19,7 @@ def main(grid: Grid, context: Context) -> None:
     fraction_train: float = float(context.run_config["fraction-train"])
     fraction_evaluate: float = float(context.run_config["fraction-evaluate"])
     strategy_name: str = context.run_config["name"]
+    semiasync_deg: int = int(context.run_config.get("semiasync-deg", 10))
 
     # Load global model
     global_model = Net()
@@ -30,6 +31,7 @@ def main(grid: Grid, context: Context) -> None:
         fraction_evaluate=fraction_evaluate,
         min_available_nodes=2,
         strategy_name=strategy_name,
+        semiasync_deg=semiasync_deg,
     )
 
     # Start strategy, run FedSaSync for `num_rounds`
