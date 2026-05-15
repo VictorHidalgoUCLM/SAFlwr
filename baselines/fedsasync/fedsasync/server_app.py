@@ -21,6 +21,7 @@ def main(grid: Grid, context: Context) -> None:
     strategy_name: str = context.run_config["name"]
     semiasync_deg: int = int(context.run_config.get("semiasync-deg", 10))
     dataset_name: str = context.run_config["dataset-name"]
+    fraction_slow: float = float(context.run_config["fraction-slow"])
 
     # Load global model
     if dataset_name == "uoft-cs/cifar10":
@@ -36,6 +37,8 @@ def main(grid: Grid, context: Context) -> None:
         min_available_nodes=2,
         strategy_name=strategy_name,
         semiasync_deg=semiasync_deg,
+        fraction_slow=fraction_slow,
+        dataset_name=dataset_name,
     )
 
     # Start strategy, run FedSaSync for `num_rounds`
@@ -45,7 +48,7 @@ def main(grid: Grid, context: Context) -> None:
         num_rounds=num_rounds,
     )
 
-    # Save final model to disk
+    """# Save final model to disk
     print("\nSaving final model to disk...")
     state_dict = result.arrays.to_torch_state_dict()
-    torch.save(state_dict, "final_model.pt")
+    torch.save(state_dict, "final_model.pt")"""

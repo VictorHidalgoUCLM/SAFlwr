@@ -20,6 +20,7 @@ from flwr.server import Grid
 import io, time
 from flwr.serverapp.strategy.strategy_utils import log_strategy_start_info
 from flwr.serverapp.strategy.result import Result
+from .utils import save_logs
 
 class FedSaSync(FedAvg):
     """Federated Semi-Asynchronous strategy.
@@ -83,6 +84,8 @@ class FedSaSync(FedAvg):
         # Additional parameters for FedSaSync if needed
         strategy_name: str = "FedAvg",
         semiasync_deg: int = 10,
+        fraction_slow: float = 0.0,
+        dataset_name: str = "uoft-cs/cifar10",
 
     ) -> None:
         super().__init__(
@@ -101,6 +104,8 @@ class FedSaSync(FedAvg):
         # Additional initialization for FedSaSync if needed
         self.strategy_name = strategy_name
         self.semiasync_deg = semiasync_deg
+        self.fraction_slow = fraction_slow
+        self.dataset_name = dataset_name
 
 
     def sample_nodes_semiasync(
@@ -334,7 +339,6 @@ class FedSaSync(FedAvg):
                 current_round,
                 train_replies,
             )
-
             # Log training metrics and append to history
             if agg_arrays is not None:
                 result.arrays = agg_arrays
@@ -364,6 +368,7 @@ class FedSaSync(FedAvg):
                 current_round,
                 evaluate_replies,
             )
+            agg_evaluate_metrics["time"] = time.time() - t_start
 
             # Log training metrics and append to history
             if agg_evaluate_metrics is not None:
@@ -390,5 +395,13 @@ class FedSaSync(FedAvg):
         for line in io.StringIO(str(result)):
             log(INFO, "\t%s", line.strip("\n"))
         log(INFO, "")
-
+        
+        # Call utility function to save logs
+        save_logs(
+            result,
+            self.strategy_name,
+            self.semiasync_deg,
+            self.fraction_slow,
+            self.dataset_name
+        )
         return result
