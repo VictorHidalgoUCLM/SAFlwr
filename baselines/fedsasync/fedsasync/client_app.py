@@ -38,10 +38,12 @@ def train(msg: Message, context: Context):
 
     # Probability of being a slow client, for simulating stragglers in FedSaSync
     fraction_slow = float(context.run_config["fraction-slow"])
+
+    random.seed(42 + partition_id + 1) # Random seed fix = 42
     straggler = random.random() < fraction_slow
 
     if straggler:
-        time.sleep(5)
+        time.sleep(7)
 
     # Call the training function
     train_loss = train_fn(

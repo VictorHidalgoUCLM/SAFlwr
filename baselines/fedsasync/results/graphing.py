@@ -2,57 +2,84 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import os
 
-# --- 1. Configuración de parámetros ---
-datasets = ['cifar10']        # Agrega aquí más: ['cifar10', 'mnist']
-fs_list = [0.25]              # Agrega aquí más: [0.25, 0.5]
-m_list = [8, 10]          # Los valores que quieres comparar en una misma gráfica
+# --- 1. Global Configuration ---
+# Define the parameters for the grid search/comparison
+DATASETS = ['cifar10']
+FS_VALUES = [0.25]
+M_VALUES = [5, 8, 10]
 
-base_path = '/home/usuario/Escritorio/SAFlwr/baselines/fedsasync/results'
+# Root directory where the results are stored
+BASE_PATH = '/home/usuario/Escritorio/SAFlwr/baselines/fedsasync/results'
+OUTPUT_DIR = './plots' # Directory to save the generated PDFs
 
-# --- 2. Bucles anidados ---
-for ds in datasets:
-    for fs in fs_list:
-        
-        # Creamos una figura nueva para cada combinación de Dataset y FS
-        plt.figure(figsize=(10, 6))
-        encontrado_al_menos_uno = False
-        
-        for m in m_list:
-            # Construcción dinámica de la ruta del archivo
-            # Ejemplo: .../cifar10/FedSaSync_fs0.25_m8.csv
-            file_name = f'FedSaSync_fs{fs}_m{m}.csv'
-            full_path = os.path.join(base_path, ds, file_name)
+# Create output directory if it doesn't exist
+if not os.path.exists(OUTPUT_DIR):
+    os.makedirs(OUTPUT_DIR)
+
+def generate_comparison_plots():
+    """
+    Iterates through datasets and fs values to create comparison plots 
+    of 'm' values (Time vs Loss).
+    """
+    print("Starting plot generation...")
+
+    for ds in DATASETS:
+        for fs in FS_VALUES:
             
-            if os.path.exists(full_path):
-                try:
-                    df = pd.read_csv(full_path)
-                    
-                    # Graficar la línea de este 'm'
-                    plt.plot(df['time'], df['loss'], 
-                             marker='.',       # Marcador más pequeño para que no se sature
-                             linestyle='-', 
-                             label=f'm = {m}') # La etiqueta indica el valor de m
-                    
-                    encontrado_al_menos_uno = True
-                except Exception as e:
-                    print(f"Error al leer {file_name}: {e}")
-            else:
-                print(f"Archivo no encontrado: {full_path}")
-
-        # --- 3. Personalización y guardado de la gráfica comparativa ---
-        if encontrado_al_menos_uno:
-            plt.title(f'Comparativa de m | Dataset: {ds} | fs: {fs}')
-            plt.xlabel('Tiempo (segundos)')
-            plt.ylabel('Pérdida (Loss)')
-            plt.grid(True, linestyle='--', alpha=0.7)
-            plt.legend(title="Valor de m")
+            # Initialize a new figure for each Dataset/FS combination
+            plt.figure(figsize=(10, 6))
+            file_found_in_group = False
             
-            # Guardamos el PDF con un nombre descriptivo
-            nombre_pdf = f"Comparativa_{ds}_fs{fs}.pdf"
-            plt.savefig(nombre_pdf, format='pdf', bbox_inches='tight')
-            print(f"Generado: {nombre_pdf}")
-        
-        # Cerramos la figura para liberar memoria y empezar la siguiente limpia
-        plt.close()
+            for m in M_VALUES:
+                # Construct file path dynamically
+                # Pattern: {BASE_PATH}/{dataset}/FedSaSync_fs{fs}_m{m}.csv
+                file_name = f'FedSaSync_fs{fs}_m{m}.csv'
+                full_path = os.path.join(BASE_PATH, ds, file_name)
+                
+                if os.path.exists(full_path):
+                    try:
+                        # Load data
+                        df = pd.read_csv(full_path)
+                        
+                        # Validate if required columns exist
+                        if 'time' in df.columns and 'loss' in df.columns:
+                            plt.plot(
+                                df['time'], 
+                                df['loss'], 
+                                marker='.', 
+                                linestyle='-', 
+                                alpha=0.8,
+                                label=f'm = {m}'
+                            )
+                            file_found_in_group = True
+                        else:
+                            print(f"Warning: Missing columns in {file_name}")
+                            
+                    except Exception as e:
+                        print(f"Error processing {file_name}: {e}")
+                else:
+                    print(f"File not found: {full_path}")
 
-print("Proceso finalizado.")
+            # --- Finalize and Save the Plot ---
+            if file_found_in_group:
+                # Add metadata and styling
+                plt.title(f'Federated Learning Analysis: {ds} (fs={fs})')
+                plt.xlabel('Time (seconds)')
+                plt.ylabel('Validation Loss')
+                plt.grid(True, linestyle='--', alpha=0.6)
+                plt.legend(title="Client Count (m)")
+                
+                # Export to PDF
+                output_filename = f"Comparison_{ds}_fs{fs}.pdf"
+                output_path = os.path.join(OUTPUT_DIR, output_filename)
+                
+                plt.savefig(output_path, format='pdf', bbox_inches='tight')
+                print(f"Successfully generated: {output_path}")
+            
+            # Close the figure to free up memory
+            plt.close()
+
+    print("Process finished.")
+
+if __name__ == "__main__":
+    generate_comparison_plots()

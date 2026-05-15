@@ -133,6 +133,7 @@ class FedSaSync(FedAvg):
         free_nodes = list(set(all_nodes) - set(running_nodes))   
 
         # Sample nodes that are not currently running
+        random.seed(42)
         sampled_nodes = random.sample(
             free_nodes,
             min(len(free_nodes), sample_size)   # Sample only from free nodes, up to the specified sample size
