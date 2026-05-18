@@ -3,13 +3,15 @@ import csv
 from logging import INFO
 from flwr.common import log
 from flwr.serverapp.strategy.result import Result
+import os
 
 def save_logs(
         result: Result,
         strategy_name: str,
         semiasync_deg: int,
         fraction_slow: float,
-        dataset_name: str,        
+        dataset_name: str,       
+        execution_number: int, 
     ) -> None:
     """Save the federated result in a csv.
 
@@ -39,14 +41,16 @@ def save_logs(
     # Build output path depending on strategy type
     if strategy_name == "FedSaSync":
         path = (
-            f"results/{dataset}/"
+            f"results/{dataset}/{execution_number}/"
             f"{strategy_name}_fs{fraction_slow}_m{semiasync_deg}.csv"
         )
     else:
         path = (
-            f"results/{dataset}/"
+            f"results/{dataset}/{execution_number}/"
             f"{strategy_name}_fs{fraction_slow}.csv"
         )
+
+    os.makedirs(os.path.dirname(path), exist_ok=True)
 
     with open(path, "w", newline="") as f:
         writer = csv.writer(f)

@@ -86,6 +86,7 @@ class FedSaSync(FedAvg):
         semiasync_deg: int = 10,
         fraction_slow: float = 0.0,
         dataset_name: str = "uoft-cs/cifar10",
+        execution_number: int = 1,
 
     ) -> None:
         super().__init__(
@@ -106,6 +107,7 @@ class FedSaSync(FedAvg):
         self.semiasync_deg = semiasync_deg
         self.fraction_slow = fraction_slow
         self.dataset_name = dataset_name
+        self.execution_number = execution_number
 
 
     def sample_nodes_semiasync(
@@ -403,6 +405,7 @@ class FedSaSync(FedAvg):
             self.strategy_name,
             self.semiasync_deg,
             self.fraction_slow,
-            self.dataset_name
+            self.dataset_name,
+            self.execution_number,
         )
         return result

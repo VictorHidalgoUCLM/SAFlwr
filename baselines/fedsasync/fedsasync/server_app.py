@@ -19,9 +19,10 @@ def main(grid: Grid, context: Context) -> None:
     fraction_train: float = float(context.run_config["fraction-train"])
     fraction_evaluate: float = float(context.run_config["fraction-evaluate"])
     strategy_name: str = context.run_config["name"]
-    semiasync_deg: int = int(context.run_config.get("semiasync-deg", 10))
+    semiasync_deg: int = int(context.run_config["semiasync-deg"])
     dataset_name: str = context.run_config["dataset-name"]
     fraction_slow: float = float(context.run_config["fraction-slow"])
+    execution_number: int = int(context.run_config["exec-number"])
 
     # Load global model
     if dataset_name == "uoft-cs/cifar10":
@@ -39,6 +40,7 @@ def main(grid: Grid, context: Context) -> None:
         semiasync_deg=semiasync_deg,
         fraction_slow=fraction_slow,
         dataset_name=dataset_name,
+        execution_number=execution_number,
     )
 
     # Start strategy, run FedSaSync for `num_rounds`
