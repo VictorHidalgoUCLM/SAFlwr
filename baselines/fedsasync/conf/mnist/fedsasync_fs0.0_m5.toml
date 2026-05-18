@@ -1,3 +1,0 @@
-name = "FedSaSync"
-semiasync-deg = 5
-dataset-name = "ylecun/mnist"

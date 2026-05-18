@@ -1,11 +1,15 @@
 #!/bin/bash
-for fs in 0.0 0.25 0.5  # Defining fraction-slows
-do
-    for i in $(seq 1 5) # Define 5 repetitions
-    do
-        flwr run . --run-config conf/cifar10/fedavg_fs${fs}.toml --stream
-        flwr run . --run-config conf/cifar10/fedsasync_fs${fs}_m5.toml --stream
-        flwr run . --run-config conf/cifar10/fedsasync_fs${fs}_m8.toml --stream
-        flwr run . --run-config conf/cifar10/fedsasync_fs${fs}_m10.toml --stream
+
+FS_VALUES=(0.0 0.25 0.5)
+M_VALUES=(5 7 10)
+REPS=5
+
+for fs in "${FS_VALUES[@]}"; do
+    for i in $(seq 1 "$REPS"); do
+        flwr run . --run-config "name=FedAvg fraction-slow=${fs} exec-number=${i}" --stream
+
+        for m in "${M_VALUES[@]}"; do
+            flwr run . --run-config "name=FedSaSync fraction-slow=${fs} semiasync-deg=${m} exec-number=${i}" --stream
+        done
     done
 done
