@@ -84,7 +84,7 @@ class FedSaSync(FedAvg):
         # Additional parameters for FedSaSync if needed
         strategy_name: str = "FedAvg",
         semiasync_deg: int = 10,
-        fraction_slow: float = 0.0,
+        number_slow: int = 0,
         dataset_name: str = "uoft-cs/cifar10",
         execution_number: int = 1,
 
@@ -105,7 +105,7 @@ class FedSaSync(FedAvg):
         # Additional initialization for FedSaSync if needed
         self.strategy_name = strategy_name
         self.semiasync_deg = semiasync_deg
-        self.fraction_slow = fraction_slow
+        self.number_slow = number_slow
         self.dataset_name = dataset_name
         self.execution_number = execution_number
 
@@ -404,7 +404,7 @@ class FedSaSync(FedAvg):
             result,
             self.strategy_name,
             self.semiasync_deg,
-            self.fraction_slow,
+            self.number_slow,
             self.dataset_name,
             self.execution_number,
         )

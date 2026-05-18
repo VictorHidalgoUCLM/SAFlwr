@@ -1,22 +1,42 @@
 """FedSaSync: A Flower Semi-Asynchronous strategy based on message-based FedAvg aggregation."""
 import csv
 from logging import INFO
-from flwr.common import log
+from flwr.common import log, RecordDict, MetricRecord
 from flwr.serverapp.strategy.result import Result
 import os
+from flwr.serverapp.strategy.strategy_utils import aggregate_metricrecords
+
+def train_metrics_aggr_fn(
+    records: list[RecordDict], weighting_metric_name: str
+) -> MetricRecord:
+    """Personalized train_metrics_aggr_fn to delete client times"""
+    train_times = []
+    for record in records:
+        train_times.append(record.metric_records["metrics"]["train_time"])
+        record.metric_records["metrics"].pop("train_time", None)
+    mean_time = sum(train_times) / len(train_times)
+
+    # Call original default function
+    aggregated_metrics = aggregate_metricrecords(
+        records,
+        weighting_metric_name,
+    )
+    aggregated_metrics["train_time"] = mean_time
+    aggregated_metrics["qtty_records"] = len(records)
+    return aggregated_metrics
 
 def save_logs(
         result: Result,
         strategy_name: str,
         semiasync_deg: int,
-        fraction_slow: float,
+        number_slow: int,
         dataset_name: str,       
         execution_number: int, 
     ) -> None:
     """Save the federated result in a csv.
 
     Utility function to write the federated final result on a csv, defined by
-    dataset_name, strategy_name, fraction_slow, and semiasync_deg.
+    dataset_name, strategy_name, number_slow, and semiasync_deg.
 
     Parameters
     ----------
@@ -26,7 +46,7 @@ def save_logs(
         Strategy name used to build the output path.
     semiasync_deg : int
         Semi-asynchronous degree (M) of the experiment.
-    fraction_slow : float
+    number_slow : float
         Fraction of slow clients in the experiment.
     dataset_name : str
         Dataset name used for the experiment.
@@ -42,12 +62,12 @@ def save_logs(
     if strategy_name == "FedSaSync":
         path = (
             f"results/{dataset}/{execution_number}/"
-            f"{strategy_name}_fs{fraction_slow}_m{semiasync_deg}.csv"
+            f"{strategy_name}_fs{number_slow}_m{semiasync_deg}.csv"
         )
     else:
         path = (
             f"results/{dataset}/{execution_number}/"
-            f"{strategy_name}_fs{fraction_slow}.csv"
+            f"{strategy_name}_fs{number_slow}.csv"
         )
 
     os.makedirs(os.path.dirname(path), exist_ok=True)
@@ -59,8 +79,8 @@ def save_logs(
         writer.writerow([
             "time",
             "loss",
-            "acc",
-            "train_loss",
+            "train_time",
+            "qtty_records",
         ])
 
         # Use rounds available in evaluation metrics
@@ -76,8 +96,8 @@ def save_logs(
             writer.writerow([
                 eval_metrics.get("time", ""),
                 eval_metrics.get("eval_loss", ""),
-                eval_metrics.get("eval_acc", ""),
-                train_metrics.get("train_loss", ""),
+                train_metrics.get("train_time", ""),
+                train_metrics.get("qtty_records", ""),
             ])
 
     # Log completion

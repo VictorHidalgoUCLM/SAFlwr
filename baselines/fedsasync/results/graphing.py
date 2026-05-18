@@ -5,8 +5,8 @@ import os
 # --- 1. Global Configuration ---
 # Define the parameters for the grid search/comparison
 DATASETS = ['cifar10']
-FS_VALUES = [0.0, 0.25, 0.5]
-M_VALUES = [0, 5, 8, 10]
+FS_VALUES = [0.3]
+M_VALUES = [7]
 
 # Root directory where the results are stored
 BASE_PATH = '/home/usuario/Escritorio/SAFlwr/baselines/fedsasync/results'

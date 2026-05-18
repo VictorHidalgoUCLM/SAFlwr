@@ -18,6 +18,8 @@ app = ClientApp()
 @app.train()
 def train(msg: Message, context: Context):
     """Train the model on local data."""
+    # Init_time counter
+    init_time = time.perf_counter()
     # Load the model and initialize it with the received weights
     dataset_name = context.run_config["dataset-name"]
     if dataset_name == "uoft-cs/cifar10":
@@ -37,13 +39,9 @@ def train(msg: Message, context: Context):
     local_epochs = context.run_config["local-epochs"]
 
     # Probability of being a slow client, for simulating stragglers in FedSaSync
-    fraction_slow = float(context.run_config["fraction-slow"])
-
-    random.seed(42 + partition_id + 1) # Random seed fix = 42
-    straggler = random.random() < fraction_slow
-
-    if straggler:
-        time.sleep(7)
+    number_slow = int(context.run_config["number-slow"])
+    if partition_id < number_slow:
+        time.sleep(5)
 
     # Call the training function
     train_loss = train_fn(
@@ -54,11 +52,14 @@ def train(msg: Message, context: Context):
         image
     )
 
+    # End_time counter
+    end_time = time.perf_counter()
     # Construct and return reply Message
     model_record = ArrayRecord(model.state_dict())
     metrics = {
         "train_loss": train_loss,
         "num-examples": len(trainloader.dataset),
+        "train_time": end_time - init_time,
     }
     metric_record = MetricRecord(metrics)
     content = RecordDict({"arrays": model_record, "metrics": metric_record})
