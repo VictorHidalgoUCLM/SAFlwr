@@ -5,12 +5,12 @@ import os
 # --- 1. Global Configuration ---
 # Define the parameters for the grid search/comparison
 DATASETS = ['cifar10']
-FS_VALUES = [0.25]
-M_VALUES = [5, 8, 10]
+FS_VALUES = [0.0, 0.25, 0.5]
+M_VALUES = [0, 5, 8, 10]
 
 # Root directory where the results are stored
 BASE_PATH = '/home/usuario/Escritorio/SAFlwr/baselines/fedsasync/results'
-OUTPUT_DIR = './plots' # Directory to save the generated PDFs
+OUTPUT_DIR = '/home/usuario/Escritorio/SAFlwr/baselines/fedsasync/results/plots' # Directory to save the generated PDFs
 
 # Create output directory if it doesn't exist
 if not os.path.exists(OUTPUT_DIR):
@@ -33,7 +33,13 @@ def generate_comparison_plots():
             for m in M_VALUES:
                 # Construct file path dynamically
                 # Pattern: {BASE_PATH}/{dataset}/FedSaSync_fs{fs}_m{m}.csv
-                file_name = f'FedSaSync_fs{fs}_m{m}.csv'
+                if m == 0:
+                    file_name = f'FedAvg_fs{fs}.csv'
+                    label = 'FedAvg'
+                else:
+                    file_name = f'FedSaSync_fs{fs}_m{m}.csv'
+                    label = f'm = {m}'
+
                 full_path = os.path.join(BASE_PATH, ds, file_name)
                 
                 if os.path.exists(full_path):
@@ -43,13 +49,15 @@ def generate_comparison_plots():
                         
                         # Validate if required columns exist
                         if 'time' in df.columns and 'loss' in df.columns:
+                            df = df.sort_values('time')
+                            df['loss_smooth'] = df['loss'].ewm(span=9, adjust=False).mean()
                             plt.plot(
                                 df['time'], 
                                 df['loss'], 
                                 marker='.', 
                                 linestyle='-', 
                                 alpha=0.8,
-                                label=f'm = {m}'
+                                label=label
                             )
                             file_found_in_group = True
                         else:
@@ -70,7 +78,7 @@ def generate_comparison_plots():
                 plt.legend(title="Client Count (m)")
                 
                 # Export to PDF
-                output_filename = f"Comparison_{ds}_fs{fs}.pdf"
+                output_filename = f"{ds}_fs{fs}.pdf"
                 output_path = os.path.join(OUTPUT_DIR, output_filename)
                 
                 plt.savefig(output_path, format='pdf', bbox_inches='tight')
