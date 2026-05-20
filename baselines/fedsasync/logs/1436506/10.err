@@ -1,0 +1,5 @@
+╭─ Error ──────────────────────────────────────────────────────────────────────╮
+│ Failed to start local SuperLink within 15s. See logs at                      │
+│ /tmp/Victor-Hidalgo-1436506-10-0/.flwr/local-superlink/superlink.log.        │
+╰──────────────────────────────────────────────────────────────────────────────╯
+cp: cannot stat '/tmp/Victor-Hidalgo-1436506-10-0/results': No such file or directory

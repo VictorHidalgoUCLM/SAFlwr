@@ -2,10 +2,10 @@
 
 FS_VALUES=(0 1 2)
 M_VALUES=(6 7 8 9 10)
-REPS=3
+REPS=10
 
 for fs in "${FS_VALUES[@]}"; do
-    for i in $(seq 1 "$REPS"); do
+    for i in $(seq 4 "$REPS"); do
         flwr run . --run-config "name=\"FedAvg\" number-slow=${fs} exec-number=${i}" --stream
 
         for m in "${M_VALUES[@]}"; do

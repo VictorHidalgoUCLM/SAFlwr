@@ -1,0 +1,1446 @@
+fs=2 m=9 i=2
+Starting local SuperLink on 127.0.0.1:39093...
+⚠️ Warning: `options.` fields in the SuperLink connection configuration are deprecated. Use `--federation-config` with `flwr run` instead. Alternatively, permanently set your simulation configuration via `flwr federation simulation-config`.
+🎊 Successfully started run 5726541616248542805
+[92mINFO [0m:      Starting Flower Simulation
+Successfully installed fedsasync to /tmp/Victor-Hidalgo-1436506-131-0/.flwr/apps/flwrlabs.fedsasync.1.0.0.f4a93b94.
+[92mINFO [0m:      Starting FedSaSync strategy:
+[92mINFO [0m:      	├── Number of rounds: 100
+[92mINFO [0m:      	├── ArrayRecord (0.24 MB)
+[92mINFO [0m:      	├── ConfigRecord (train): (empty!)
+[92mINFO [0m:      	├── ConfigRecord (evaluate): (empty!)
+[92mINFO [0m:      	├──> Sampling:
+[92mINFO [0m:      	│	├──Fraction: train (1.00) | evaluate ( 1.00)
+[92mINFO [0m:      	│	├──Minimum nodes: train (2) | evaluate (2)
+[92mINFO [0m:      	│	└──Minimum available nodes: 2
+[92mINFO [0m:      	└──> Keys in records:
+[92mINFO [0m:      		├── Weighted by: 'num-examples'
+[92mINFO [0m:      		├── ArrayRecord key: 'arrays'
+[92mINFO [0m:      		└── ConfigRecord key: 'config'
+[92mINFO [0m:      
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 1/100]
+[92mINFO [0m:      configure_train: Sampled 10 nodes (out of 10)
+/home/Victor.Hidalgo/.pyenv/versions/3.12.12/envs/fedsasync/lib/python3.12/site-packages/ray/_private/worker.py:2051: FutureWarning: Tip: In future versions of Ray, Ray will no longer override accelerator visible devices env var if num_gpus=0 or num_gpus=None (default). To enable this behavior and turn off this error message, set RAY_ACCEL_ENV_VAR_OVERRIDE_ON_ZERO=0
+  warnings.warn(
+[36m(ClientAppActor pid=2634091)[0m Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 2.19426759507921, 'train_time': 7.933163472140829, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[36m(pid=gcs_server)[0m [2026-05-20 03:18:48,555 E 2632785 2632785] (gcs_server) gcs_server.cc:302: Failed to establish connection to the event+metrics exporter agent. Events and metrics will not be exported. Exporter agent status: RpcError: Running out of retries to initialize the metrics agent. rpc_code: 14
+[36m(ClientAppActor pid=2634108)[0m Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.[32m [repeated 9x across cluster] (Ray deduplicates logs by default. Set RAY_DEDUP_LOGS=0 to disable log deduplication, or see https://docs.ray.io/en/master/ray-observability/user-guides/configure-logging.html#log-deduplication for more options.)[0m
+[33m(raylet)[0m [2026-05-20 03:18:50,620 E 2633061 2633061] (raylet) main.cc:975: Failed to establish connection to the metrics exporter agent. Metrics will not be exported. Exporter agent status: RpcError: Running out of retries to initialize the metrics agent. rpc_code: 14
+[36m(ClientAppActor pid=2634115)[0m [2026-05-20 03:18:54,735 E 2634115 2634312] core_worker_process.cc:825: Failed to establish connection to the metrics exporter agent. Metrics will not be exported. Exporter agent status: RpcError: Running out of retries to initialize the metrics agent. rpc_code: 14
+[36m(ClientAppActor pid=2634109)[0m Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 2.3208026677370066, 'eval_acc': 0.0928, 'time': 46.75675964355469}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 2/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 2.1328692175547284, 'train_time': 6.353053888926904, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 2.242103220522404, 'eval_acc': 0.11870000000000001, 'time': 53.89222311973572}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 3/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 2.087934586630927, 'train_time': 6.1613456726902065, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 2.249816007167101, 'eval_acc': 0.164, 'time': 61.02566313743591}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 4/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 2.0516503254572553, 'train_time': 6.134451442915532, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 2.1346028823405505, 'eval_acc': 0.1744, 'time': 71.15821099281311}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 5/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 2.0182399018605546, 'train_time': 6.159430320064227, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 2.127013778686523, 'eval_acc': 0.1895, 'time': 78.19038581848145}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 6/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 2.0068802410761513, 'train_time': 6.135910072881314, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 2.043091366812587, 'eval_acc': 0.22710000000000002, 'time': 85.32230806350708}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 7/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 2.0018692229588826, 'train_time': 6.1422999029358225, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 2.047332662343979, 'eval_acc': 0.2299, 'time': 92.35710787773132}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 8/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.980333760579427, 'train_time': 6.155183808878064, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 2.0318146046251058, 'eval_acc': 0.2591, 'time': 99.49028944969177}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 9/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.974665504455566, 'train_time': 6.096862196922302, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 2.049200998619199, 'eval_acc': 0.24230000000000004, 'time': 106.62295961380005}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 10/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.9687025418811372, 'train_time': 6.050884546919002, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 2.0004994850605726, 'eval_acc': 0.276, 'time': 113.76613807678223}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 11/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.971388807720608, 'train_time': 6.023341258987784, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.9869062811136244, 'eval_acc': 0.23980000000000004, 'time': 120.90055274963379}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 12/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.9695018326441442, 'train_time': 6.03171333629224, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.9897813487797977, 'eval_acc': 0.2935, 'time': 127.93352389335632}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 13/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.965155941857232, 'train_time': 6.083080054778192, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.9862851362675429, 'eval_acc': 0.2731, 'time': 135.06547164916992}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 14/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.9445818395614622, 'train_time': 6.075560613431865, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.9549226388335228, 'eval_acc': 0.2902, 'time': 142.09727835655212}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 15/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.9527720357047187, 'train_time': 6.122076016333368, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.9728784415870906, 'eval_acc': 0.27030000000000004, 'time': 149.22986316680908}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 16/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.9478511034647623, 'train_time': 6.130845324860679, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.9428095459938053, 'eval_acc': 0.29860000000000003, 'time': 156.2632806301117}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 17/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.9373891113069324, 'train_time': 6.077874618685907, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.994352396950126, 'eval_acc': 0.2662, 'time': 163.29599022865295}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 18/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.9453553680843776, 'train_time': 6.119852523629864, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.9201536968350412, 'eval_acc': 0.28650000000000003, 'time': 170.428124666214}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 19/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.9261142494413586, 'train_time': 6.1194575228210955, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.9557239893823866, 'eval_acc': 0.2846, 'time': 177.46093368530273}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 20/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.9290470234553017, 'train_time': 6.129265151090092, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.939745614677668, 'eval_acc': 0.3086, 'time': 184.59445309638977}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 21/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.910374611960517, 'train_time': 6.086489858726661, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.88427658341825, 'eval_acc': 0.32880000000000004, 'time': 191.7266547679901}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 22/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.9298529459635414, 'train_time': 6.109966401631634, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.9545778792351487, 'eval_acc': 0.2974, 'time': 198.86012887954712}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 23/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.9342708486980862, 'train_time': 6.138584278110001, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.9377100538462402, 'eval_acc': 0.28010000000000007, 'time': 205.9929506778717}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 24/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.9351867332458497, 'train_time': 6.07317306784292, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.8984466634690762, 'eval_acc': 0.31760000000000005, 'time': 213.1251997947693}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 25/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.918544175783793, 'train_time': 6.10566599584288, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.9033821921795608, 'eval_acc': 0.3241, 'time': 220.25746726989746}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 26/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.9162324140336777, 'train_time': 6.138517150448428, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.937105905264616, 'eval_acc': 0.31920000000000004, 'time': 227.29018259048462}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 27/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.922762993176778, 'train_time': 6.093695658776495, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.9679293483495712, 'eval_acc': 0.3058, 'time': 234.42402172088623}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 28/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.9155049227608574, 'train_time': 6.143848870363501, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.9043440703302625, 'eval_acc': 0.3207, 'time': 241.45677137374878}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 29/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.900767960760328, 'train_time': 6.11567140577568, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.923031222447753, 'eval_acc': 0.29919999999999997, 'time': 248.60139107704163}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 30/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.9020095487170747, 'train_time': 6.148311985242698, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.9190425876528026, 'eval_acc': 0.32060000000000005, 'time': 255.73400354385376}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 31/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.9060468548668754, 'train_time': 6.1455940711829395, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.8951526261866096, 'eval_acc': 0.323, 'time': 262.7663996219635}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 32/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.8927401820288763, 'train_time': 6.151632390088505, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.9097603365778921, 'eval_acc': 0.31739999999999996, 'time': 269.89892745018005}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 33/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.9027661738925512, 'train_time': 6.142563373885221, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.9359064757823947, 'eval_acc': 0.3077, 'time': 277.03130650520325}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 34/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.912936180114746, 'train_time': 6.161259642491738, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.8924536049366, 'eval_acc': 0.33290000000000003, 'time': 284.16503739356995}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 35/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.8963831241395739, 'train_time': 6.159849056353171, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.8727584324777127, 'eval_acc': 0.32960000000000006, 'time': 291.1995761394501}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 36/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.8704757376776797, 'train_time': 6.167363088164064, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.8694880817085502, 'eval_acc': 0.3429, 'time': 298.33472776412964}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 37/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.8747315430111355, 'train_time': 6.1353711363756, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.8885431934148074, 'eval_acc': 0.33320000000000005, 'time': 305.46754121780396}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 38/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.888337859259711, 'train_time': 6.148851715649168, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.890626087412238, 'eval_acc': 0.3418, 'time': 312.50058817863464}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 39/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.887325393994649, 'train_time': 6.1430491873373585, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.890540187805891, 'eval_acc': 0.3366, 'time': 319.6328270435333}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 40/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.8824589998457166, 'train_time': 6.174249668088224, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.9250406332314016, 'eval_acc': 0.31029999999999996, 'time': 326.76485896110535}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 41/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.8757973083919948, 'train_time': 6.061586597106523, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.8305659923702482, 'eval_acc': 0.3494, 'time': 333.8979618549347}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 42/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.86120660633511, 'train_time': 6.106348770360152, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.8886087182909252, 'eval_acc': 0.3395000000000001, 'time': 341.03079438209534}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 43/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.87543809138404, 'train_time': 6.173637106186813, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.8767816815525298, 'eval_acc': 0.34570000000000006, 'time': 348.1681978702545}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 44/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.8715595924589368, 'train_time': 6.158947130458222, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.8638973720371723, 'eval_acc': 0.34440000000000004, 'time': 355.30109882354736}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 45/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.8605445659425526, 'train_time': 6.171813001028365, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.8674740105867387, 'eval_acc': 0.34469999999999995, 'time': 362.3335335254669}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 46/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.8566929275724624, 'train_time': 6.164536478618781, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.8553890977054837, 'eval_acc': 0.3598, 'time': 369.466810464859}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 47/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.8588783706029253, 'train_time': 6.160915692647298, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.8525555625557903, 'eval_acc': 0.3422, 'time': 376.49974393844604}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 48/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.87152203602261, 'train_time': 6.166660761874583, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.9254008769989015, 'eval_acc': 0.3307, 'time': 383.63225412368774}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 49/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.8826093088785805, 'train_time': 6.152877080978619, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.9109297599643473, 'eval_acc': 0.3266, 'time': 390.66407775878906}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 50/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.8672790282567342, 'train_time': 6.156152710732487, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.8938066095113755, 'eval_acc': 0.34179999999999994, 'time': 397.80973052978516}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 51/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.85807228480445, 'train_time': 6.165419002994895, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.8030942082405095, 'eval_acc': 0.35829999999999995, 'time': 404.9441990852356}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 52/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.8513395130369399, 'train_time': 6.17306038716601, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.8368786491453648, 'eval_acc': 0.35790000000000005, 'time': 411.9762797355652}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 53/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.8511015503141612, 'train_time': 6.178025611365835, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.8814101096242668, 'eval_acc': 0.3421, 'time': 419.1094768047333}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 54/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.8568002895779079, 'train_time': 6.141769647391306, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.8182896710932255, 'eval_acc': 0.36650000000000005, 'time': 426.2417325973511}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 55/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.8362894049750433, 'train_time': 6.1616452143838005, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.8201381195336581, 'eval_acc': 0.37400000000000005, 'time': 433.37454319000244}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 56/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.8733794616063435, 'train_time': 6.095440044792162, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.8371004633605483, 'eval_acc': 0.3657, 'time': 440.5073752403259}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 57/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.8820534599092271, 'train_time': 6.151900646794173, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.879076382517815, 'eval_acc': 0.3398, 'time': 447.6452236175537}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 58/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.8404433310826618, 'train_time': 6.148344280612138, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.808839185535908, 'eval_acc': 0.3778000000000001, 'time': 454.77738094329834}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 59/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.8437275560167101, 'train_time': 6.1465841672486725, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.8654814455658197, 'eval_acc': 0.35479999999999995, 'time': 461.9111659526825}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 60/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.8436762221654257, 'train_time': 6.161900999645392, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.8290789119899276, 'eval_acc': 0.3790000000000001, 'time': 469.0443043708801}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 61/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.8442590274810793, 'train_time': 6.157193679155575, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.8263620276004078, 'eval_acc': 0.36400000000000005, 'time': 476.17644023895264}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 62/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.8679152093463474, 'train_time': 6.130746700283554, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.8550689201802015, 'eval_acc': 0.36740000000000006, 'time': 483.3100938796997}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 63/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.856101828045315, 'train_time': 6.14856597284476, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.8247945573180915, 'eval_acc': 0.3681, 'time': 490.4421021938324}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 64/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.8564293541378443, 'train_time': 6.157660089640154, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.8848854251205922, 'eval_acc': 0.3477, 'time': 497.57637667655945}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 65/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.8586051741705998, 'train_time': 6.151793823473984, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.8098962854593994, 'eval_acc': 0.381, 'time': 504.7091693878174}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 66/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.8190327555338541, 'train_time': 6.142356535419822, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.7823260545730588, 'eval_acc': 0.39039999999999997, 'time': 511.7415146827698}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 67/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.8374293804168702, 'train_time': 6.152811958351069, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.8623159710317851, 'eval_acc': 0.3546, 'time': 518.8912725448608}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 68/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.8331438725789384, 'train_time': 6.122116805571649, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.8374981306493283, 'eval_acc': 0.3749, 'time': 526.0357792377472}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 69/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.8481493455039133, 'train_time': 6.042705523264077, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.8570163775235415, 'eval_acc': 0.37040000000000006, 'time': 533.1673126220703}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 70/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.855145866182115, 'train_time': 6.012353364378214, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.8447099305689336, 'eval_acc': 0.37260000000000004, 'time': 540.303914308548}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 71/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.856726216952006, 'train_time': 6.030145779252052, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.8625722445547583, 'eval_acc': 0.35930000000000006, 'time': 547.4368145465851}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 72/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.8309462628894382, 'train_time': 6.059717586677936, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.817564718052745, 'eval_acc': 0.3777000000000001, 'time': 554.5701038837433}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 73/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.855590577019585, 'train_time': 6.022379161169131, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.8478979472070933, 'eval_acc': 0.35390000000000005, 'time': 561.7029464244843}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 74/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.8498272256851196, 'train_time': 6.0014939026700125, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.844859016314149, 'eval_acc': 0.3686, 'time': 568.7550899982452}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 75/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.838168833732605, 'train_time': 5.998522924673226, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.8591060526669025, 'eval_acc': 0.3593, 'time': 575.8872609138489}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 76/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.8231193664338854, 'train_time': 6.014065354648563, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.8057921264320616, 'eval_acc': 0.36829999999999996, 'time': 582.9213590621948}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 77/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.8162140472200183, 'train_time': 6.00259096113344, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.8093924645334483, 'eval_acc': 0.36960000000000004, 'time': 590.0543761253357}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 78/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.8269694889916315, 'train_time': 5.997940211039451, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.8439434710890055, 'eval_acc': 0.3707, 'time': 597.1865694522858}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 79/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.8159550493028431, 'train_time': 6.014827919503053, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.8049000527709724, 'eval_acc': 0.3899, 'time': 604.3219985961914}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 80/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.8382921403249102, 'train_time': 6.0012702540391025, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.8199613679200413, 'eval_acc': 0.38599999999999995, 'time': 611.4547982215881}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 81/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.8295898599624631, 'train_time': 6.013507758577664, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.8585317302495241, 'eval_acc': 0.35240000000000005, 'time': 618.5966455936432}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 82/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.8268116001553, 'train_time': 6.0093115454332695, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.8831774938851593, 'eval_acc': 0.34850000000000003, 'time': 625.7284023761749}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 83/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.8388800738652546, 'train_time': 6.0046412530872555, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.8629549808800223, 'eval_acc': 0.37320000000000003, 'time': 632.7610268592834}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 84/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.815054993841383, 'train_time': 6.008364484748906, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.814964298531413, 'eval_acc': 0.3779, 'time': 639.793306350708}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 85/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.8246957010693021, 'train_time': 6.027387597701615, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.8424077380448578, 'eval_acc': 0.376, 'time': 646.8275923728943}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 86/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.8400081122716268, 'train_time': 6.000948376125759, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.8586738377809526, 'eval_acc': 0.3678, 'time': 653.9593150615692}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 87/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.8358136092291935, 'train_time': 6.06554005564087, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.831162841245532, 'eval_acc': 0.3809, 'time': 660.9938428401947}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 88/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.826839237107171, 'train_time': 6.086793982941243, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.8073928065598015, 'eval_acc': 0.3829, 'time': 668.1285047531128}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 89/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.833834708107842, 'train_time': 6.124525349794163, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.8651302322745325, 'eval_acc': 0.3584, 'time': 675.2602069377899}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 90/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.8347069395913016, 'train_time': 6.079085707043608, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.8175431489944462, 'eval_acc': 0.38450000000000006, 'time': 682.2933945655823}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 91/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.8221232606040108, 'train_time': 6.117627152759168, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.834887347742915, 'eval_acc': 0.37660000000000005, 'time': 689.4254896640778}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 92/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.818801349322001, 'train_time': 6.0794810596853495, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.8329526126384734, 'eval_acc': 0.3748, 'time': 696.5579569339752}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 93/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.8251702011956108, 'train_time': 6.109602378681302, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.89278986081481, 'eval_acc': 0.34950000000000003, 'time': 703.6899435520172}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 94/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.8445162048339843, 'train_time': 6.075682385100259, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.8515875648707154, 'eval_acc': 0.35500000000000004, 'time': 710.8235359191895}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 95/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.8245210384792752, 'train_time': 6.087000733862321, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.8182491477578882, 'eval_acc': 0.38370000000000004, 'time': 717.8552892208099}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 96/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.8276642393536038, 'train_time': 6.074356687151724, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.8145793326199056, 'eval_acc': 0.3831, 'time': 724.9956018924713}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 97/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.8272881127463445, 'train_time': 6.086501556759079, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.8182037856429816, 'eval_acc': 0.3839000000000001, 'time': 732.0289516448975}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 98/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.810363010512458, 'train_time': 6.057750582695007, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.7816612105816605, 'eval_acc': 0.3932, 'time': 739.061803817749}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 99/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 9 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.8410735192828707, 'train_time': 6.0948203938702745, 'qtty_records': 9}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.874205181375146, 'eval_acc': 0.367, 'time': 746.1950125694275}
+[92mINFO [0m:      
+[92mINFO [0m:      [ROUND 100/100]
+[92mINFO [0m:      configure_train: Sampled 9 nodes (out of 10)
+[92mINFO [0m:      aggregate_train: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'train_loss': 1.8688273447990418, 'train_time': 6.51403098385781, 'qtty_records': 10}
+[92mINFO [0m:      configure_evaluate: Sampled 10 nodes (out of 10)
+[92mINFO [0m:      aggregate_evaluate: Received 10 results and 0 failures
+[92mINFO [0m:      	└──> Aggregated MetricRecord: {'eval_loss': 1.8760241728276015, 'eval_acc': 0.35829999999999995, 'time': 759.2320940494537}
+[92mINFO [0m:      
+[92mINFO [0m:      Strategy execution finished in 759.23s
+[92mINFO [0m:      
+[92mINFO [0m:      Final results:
+[92mINFO [0m:      
+[92mINFO [0m:      	Global Arrays:
+[92mINFO [0m:      		ArrayRecord (0.238 MB)
+[92mINFO [0m:      	
+[92mINFO [0m:      	Aggregated ClientApp-side Train Metrics:
+[92mINFO [0m:      	{ 1: { 'qtty_records': '9',
+[92mINFO [0m:      	       'train_loss': '2.1943e+00',
+[92mINFO [0m:      	       'train_time': '7.9332e+00'},
+[92mINFO [0m:      	  2: { 'qtty_records': '9',
+[92mINFO [0m:      	       'train_loss': '2.1329e+00',
+[92mINFO [0m:      	       'train_time': '6.3531e+00'},
+[92mINFO [0m:      	  3: { 'qtty_records': '9',
+[92mINFO [0m:      	       'train_loss': '2.0879e+00',
+[92mINFO [0m:      	       'train_time': '6.1613e+00'},
+[92mINFO [0m:      	  4: { 'qtty_records': '9',
+[92mINFO [0m:      	       'train_loss': '2.0517e+00',
+[92mINFO [0m:      	       'train_time': '6.1345e+00'},
+[92mINFO [0m:      	  5: { 'qtty_records': '9',
+[92mINFO [0m:      	       'train_loss': '2.0182e+00',
+[92mINFO [0m:      	       'train_time': '6.1594e+00'},
+[92mINFO [0m:      	  6: { 'qtty_records': '9',
+[92mINFO [0m:      	       'train_loss': '2.0069e+00',
+[92mINFO [0m:      	       'train_time': '6.1359e+00'},
+[92mINFO [0m:      	  7: { 'qtty_records': '9',
+[92mINFO [0m:      	       'train_loss': '2.0019e+00',
+[92mINFO [0m:      	       'train_time': '6.1423e+00'},
+[92mINFO [0m:      	  8: { 'qtty_records': '9',
+[92mINFO [0m:      	       'train_loss': '1.9803e+00',
+[92mINFO [0m:      	       'train_time': '6.1552e+00'},
+[92mINFO [0m:      	  9: { 'qtty_records': '9',
+[92mINFO [0m:      	       'train_loss': '1.9747e+00',
+[92mINFO [0m:      	       'train_time': '6.0969e+00'},
+[92mINFO [0m:      	  10: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.9687e+00',
+[92mINFO [0m:      	        'train_time': '6.0509e+00'},
+[92mINFO [0m:      	  11: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.9714e+00',
+[92mINFO [0m:      	        'train_time': '6.0233e+00'},
+[92mINFO [0m:      	  12: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.9695e+00',
+[92mINFO [0m:      	        'train_time': '6.0317e+00'},
+[92mINFO [0m:      	  13: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.9652e+00',
+[92mINFO [0m:      	        'train_time': '6.0831e+00'},
+[92mINFO [0m:      	  14: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.9446e+00',
+[92mINFO [0m:      	        'train_time': '6.0756e+00'},
+[92mINFO [0m:      	  15: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.9528e+00',
+[92mINFO [0m:      	        'train_time': '6.1221e+00'},
+[92mINFO [0m:      	  16: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.9479e+00',
+[92mINFO [0m:      	        'train_time': '6.1308e+00'},
+[92mINFO [0m:      	  17: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.9374e+00',
+[92mINFO [0m:      	        'train_time': '6.0779e+00'},
+[92mINFO [0m:      	  18: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.9454e+00',
+[92mINFO [0m:      	        'train_time': '6.1199e+00'},
+[92mINFO [0m:      	  19: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.9261e+00',
+[92mINFO [0m:      	        'train_time': '6.1195e+00'},
+[92mINFO [0m:      	  20: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.9290e+00',
+[92mINFO [0m:      	        'train_time': '6.1293e+00'},
+[92mINFO [0m:      	  21: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.9104e+00',
+[92mINFO [0m:      	        'train_time': '6.0865e+00'},
+[92mINFO [0m:      	  22: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.9299e+00',
+[92mINFO [0m:      	        'train_time': '6.1100e+00'},
+[92mINFO [0m:      	  23: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.9343e+00',
+[92mINFO [0m:      	        'train_time': '6.1386e+00'},
+[92mINFO [0m:      	  24: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.9352e+00',
+[92mINFO [0m:      	        'train_time': '6.0732e+00'},
+[92mINFO [0m:      	  25: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.9185e+00',
+[92mINFO [0m:      	        'train_time': '6.1057e+00'},
+[92mINFO [0m:      	  26: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.9162e+00',
+[92mINFO [0m:      	        'train_time': '6.1385e+00'},
+[92mINFO [0m:      	  27: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.9228e+00',
+[92mINFO [0m:      	        'train_time': '6.0937e+00'},
+[92mINFO [0m:      	  28: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.9155e+00',
+[92mINFO [0m:      	        'train_time': '6.1438e+00'},
+[92mINFO [0m:      	  29: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.9008e+00',
+[92mINFO [0m:      	        'train_time': '6.1157e+00'},
+[92mINFO [0m:      	  30: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.9020e+00',
+[92mINFO [0m:      	        'train_time': '6.1483e+00'},
+[92mINFO [0m:      	  31: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.9060e+00',
+[92mINFO [0m:      	        'train_time': '6.1456e+00'},
+[92mINFO [0m:      	  32: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8927e+00',
+[92mINFO [0m:      	        'train_time': '6.1516e+00'},
+[92mINFO [0m:      	  33: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.9028e+00',
+[92mINFO [0m:      	        'train_time': '6.1426e+00'},
+[92mINFO [0m:      	  34: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.9129e+00',
+[92mINFO [0m:      	        'train_time': '6.1613e+00'},
+[92mINFO [0m:      	  35: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8964e+00',
+[92mINFO [0m:      	        'train_time': '6.1598e+00'},
+[92mINFO [0m:      	  36: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8705e+00',
+[92mINFO [0m:      	        'train_time': '6.1674e+00'},
+[92mINFO [0m:      	  37: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8747e+00',
+[92mINFO [0m:      	        'train_time': '6.1354e+00'},
+[92mINFO [0m:      	  38: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8883e+00',
+[92mINFO [0m:      	        'train_time': '6.1489e+00'},
+[92mINFO [0m:      	  39: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8873e+00',
+[92mINFO [0m:      	        'train_time': '6.1430e+00'},
+[92mINFO [0m:      	  40: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8825e+00',
+[92mINFO [0m:      	        'train_time': '6.1742e+00'},
+[92mINFO [0m:      	  41: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8758e+00',
+[92mINFO [0m:      	        'train_time': '6.0616e+00'},
+[92mINFO [0m:      	  42: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8612e+00',
+[92mINFO [0m:      	        'train_time': '6.1063e+00'},
+[92mINFO [0m:      	  43: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8754e+00',
+[92mINFO [0m:      	        'train_time': '6.1736e+00'},
+[92mINFO [0m:      	  44: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8716e+00',
+[92mINFO [0m:      	        'train_time': '6.1589e+00'},
+[92mINFO [0m:      	  45: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8605e+00',
+[92mINFO [0m:      	        'train_time': '6.1718e+00'},
+[92mINFO [0m:      	  46: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8567e+00',
+[92mINFO [0m:      	        'train_time': '6.1645e+00'},
+[92mINFO [0m:      	  47: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8589e+00',
+[92mINFO [0m:      	        'train_time': '6.1609e+00'},
+[92mINFO [0m:      	  48: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8715e+00',
+[92mINFO [0m:      	        'train_time': '6.1667e+00'},
+[92mINFO [0m:      	  49: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8826e+00',
+[92mINFO [0m:      	        'train_time': '6.1529e+00'},
+[92mINFO [0m:      	  50: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8673e+00',
+[92mINFO [0m:      	        'train_time': '6.1562e+00'},
+[92mINFO [0m:      	  51: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8581e+00',
+[92mINFO [0m:      	        'train_time': '6.1654e+00'},
+[92mINFO [0m:      	  52: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8513e+00',
+[92mINFO [0m:      	        'train_time': '6.1731e+00'},
+[92mINFO [0m:      	  53: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8511e+00',
+[92mINFO [0m:      	        'train_time': '6.1780e+00'},
+[92mINFO [0m:      	  54: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8568e+00',
+[92mINFO [0m:      	        'train_time': '6.1418e+00'},
+[92mINFO [0m:      	  55: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8363e+00',
+[92mINFO [0m:      	        'train_time': '6.1616e+00'},
+[92mINFO [0m:      	  56: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8734e+00',
+[92mINFO [0m:      	        'train_time': '6.0954e+00'},
+[92mINFO [0m:      	  57: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8821e+00',
+[92mINFO [0m:      	        'train_time': '6.1519e+00'},
+[92mINFO [0m:      	  58: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8404e+00',
+[92mINFO [0m:      	        'train_time': '6.1483e+00'},
+[92mINFO [0m:      	  59: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8437e+00',
+[92mINFO [0m:      	        'train_time': '6.1466e+00'},
+[92mINFO [0m:      	  60: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8437e+00',
+[92mINFO [0m:      	        'train_time': '6.1619e+00'},
+[92mINFO [0m:      	  61: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8443e+00',
+[92mINFO [0m:      	        'train_time': '6.1572e+00'},
+[92mINFO [0m:      	  62: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8679e+00',
+[92mINFO [0m:      	        'train_time': '6.1307e+00'},
+[92mINFO [0m:      	  63: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8561e+00',
+[92mINFO [0m:      	        'train_time': '6.1486e+00'},
+[92mINFO [0m:      	  64: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8564e+00',
+[92mINFO [0m:      	        'train_time': '6.1577e+00'},
+[92mINFO [0m:      	  65: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8586e+00',
+[92mINFO [0m:      	        'train_time': '6.1518e+00'},
+[92mINFO [0m:      	  66: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8190e+00',
+[92mINFO [0m:      	        'train_time': '6.1424e+00'},
+[92mINFO [0m:      	  67: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8374e+00',
+[92mINFO [0m:      	        'train_time': '6.1528e+00'},
+[92mINFO [0m:      	  68: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8331e+00',
+[92mINFO [0m:      	        'train_time': '6.1221e+00'},
+[92mINFO [0m:      	  69: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8481e+00',
+[92mINFO [0m:      	        'train_time': '6.0427e+00'},
+[92mINFO [0m:      	  70: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8551e+00',
+[92mINFO [0m:      	        'train_time': '6.0124e+00'},
+[92mINFO [0m:      	  71: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8567e+00',
+[92mINFO [0m:      	        'train_time': '6.0301e+00'},
+[92mINFO [0m:      	  72: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8309e+00',
+[92mINFO [0m:      	        'train_time': '6.0597e+00'},
+[92mINFO [0m:      	  73: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8556e+00',
+[92mINFO [0m:      	        'train_time': '6.0224e+00'},
+[92mINFO [0m:      	  74: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8498e+00',
+[92mINFO [0m:      	        'train_time': '6.0015e+00'},
+[92mINFO [0m:      	  75: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8382e+00',
+[92mINFO [0m:      	        'train_time': '5.9985e+00'},
+[92mINFO [0m:      	  76: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8231e+00',
+[92mINFO [0m:      	        'train_time': '6.0141e+00'},
+[92mINFO [0m:      	  77: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8162e+00',
+[92mINFO [0m:      	        'train_time': '6.0026e+00'},
+[92mINFO [0m:      	  78: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8270e+00',
+[92mINFO [0m:      	        'train_time': '5.9979e+00'},
+[92mINFO [0m:      	  79: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8160e+00',
+[92mINFO [0m:      	        'train_time': '6.0148e+00'},
+[92mINFO [0m:      	  80: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8383e+00',
+[92mINFO [0m:      	        'train_time': '6.0013e+00'},
+[92mINFO [0m:      	  81: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8296e+00',
+[92mINFO [0m:      	        'train_time': '6.0135e+00'},
+[92mINFO [0m:      	  82: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8268e+00',
+[92mINFO [0m:      	        'train_time': '6.0093e+00'},
+[92mINFO [0m:      	  83: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8389e+00',
+[92mINFO [0m:      	        'train_time': '6.0046e+00'},
+[92mINFO [0m:      	  84: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8151e+00',
+[92mINFO [0m:      	        'train_time': '6.0084e+00'},
+[92mINFO [0m:      	  85: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8247e+00',
+[92mINFO [0m:      	        'train_time': '6.0274e+00'},
+[92mINFO [0m:      	  86: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8400e+00',
+[92mINFO [0m:      	        'train_time': '6.0009e+00'},
+[92mINFO [0m:      	  87: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8358e+00',
+[92mINFO [0m:      	        'train_time': '6.0655e+00'},
+[92mINFO [0m:      	  88: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8268e+00',
+[92mINFO [0m:      	        'train_time': '6.0868e+00'},
+[92mINFO [0m:      	  89: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8338e+00',
+[92mINFO [0m:      	        'train_time': '6.1245e+00'},
+[92mINFO [0m:      	  90: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8347e+00',
+[92mINFO [0m:      	        'train_time': '6.0791e+00'},
+[92mINFO [0m:      	  91: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8221e+00',
+[92mINFO [0m:      	        'train_time': '6.1176e+00'},
+[92mINFO [0m:      	  92: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8188e+00',
+[92mINFO [0m:      	        'train_time': '6.0795e+00'},
+[92mINFO [0m:      	  93: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8252e+00',
+[92mINFO [0m:      	        'train_time': '6.1096e+00'},
+[92mINFO [0m:      	  94: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8445e+00',
+[92mINFO [0m:      	        'train_time': '6.0757e+00'},
+[92mINFO [0m:      	  95: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8245e+00',
+[92mINFO [0m:      	        'train_time': '6.0870e+00'},
+[92mINFO [0m:      	  96: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8277e+00',
+[92mINFO [0m:      	        'train_time': '6.0744e+00'},
+[92mINFO [0m:      	  97: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8273e+00',
+[92mINFO [0m:      	        'train_time': '6.0865e+00'},
+[92mINFO [0m:      	  98: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8104e+00',
+[92mINFO [0m:      	        'train_time': '6.0578e+00'},
+[92mINFO [0m:      	  99: { 'qtty_records': '9',
+[92mINFO [0m:      	        'train_loss': '1.8411e+00',
+[92mINFO [0m:      	        'train_time': '6.0948e+00'},
+[92mINFO [0m:      	  100: { 'qtty_records': '10',
+[92mINFO [0m:      	         'train_loss': '1.8688e+00',
+[92mINFO [0m:      	         'train_time': '6.5140e+00'}}
+[92mINFO [0m:      	
+[92mINFO [0m:      	Aggregated ClientApp-side Evaluate Metrics:
+[92mINFO [0m:      	{ 1: { 'eval_acc': '9.2800e-02',
+[92mINFO [0m:      	       'eval_loss': '2.3208e+00',
+[92mINFO [0m:      	       'time': '4.6757e+01'},
+[92mINFO [0m:      	  2: { 'eval_acc': '1.1870e-01',
+[92mINFO [0m:      	       'eval_loss': '2.2421e+00',
+[92mINFO [0m:      	       'time': '5.3892e+01'},
+[92mINFO [0m:      	  3: { 'eval_acc': '1.6400e-01',
+[92mINFO [0m:      	       'eval_loss': '2.2498e+00',
+[92mINFO [0m:      	       'time': '6.1026e+01'},
+[92mINFO [0m:      	  4: { 'eval_acc': '1.7440e-01',
+[92mINFO [0m:      	       'eval_loss': '2.1346e+00',
+[92mINFO [0m:      	       'time': '7.1158e+01'},
+[92mINFO [0m:      	  5: { 'eval_acc': '1.8950e-01',
+[92mINFO [0m:      	       'eval_loss': '2.1270e+00',
+[92mINFO [0m:      	       'time': '7.8190e+01'},
+[92mINFO [0m:      	  6: { 'eval_acc': '2.2710e-01',
+[92mINFO [0m:      	       'eval_loss': '2.0431e+00',
+[92mINFO [0m:      	       'time': '8.5322e+01'},
+[92mINFO [0m:      	  7: { 'eval_acc': '2.2990e-01',
+[92mINFO [0m:      	       'eval_loss': '2.0473e+00',
+[92mINFO [0m:      	       'time': '9.2357e+01'},
+[92mINFO [0m:      	  8: { 'eval_acc': '2.5910e-01',
+[92mINFO [0m:      	       'eval_loss': '2.0318e+00',
+[92mINFO [0m:      	       'time': '9.9490e+01'},
+[92mINFO [0m:      	  9: { 'eval_acc': '2.4230e-01',
+[92mINFO [0m:      	       'eval_loss': '2.0492e+00',
+[92mINFO [0m:      	       'time': '1.0662e+02'},
+[92mINFO [0m:      	  10: { 'eval_acc': '2.7600e-01',
+[92mINFO [0m:      	        'eval_loss': '2.0005e+00',
+[92mINFO [0m:      	        'time': '1.1377e+02'},
+[92mINFO [0m:      	  11: { 'eval_acc': '2.3980e-01',
+[92mINFO [0m:      	        'eval_loss': '1.9869e+00',
+[92mINFO [0m:      	        'time': '1.2090e+02'},
+[92mINFO [0m:      	  12: { 'eval_acc': '2.9350e-01',
+[92mINFO [0m:      	        'eval_loss': '1.9898e+00',
+[92mINFO [0m:      	        'time': '1.2793e+02'},
+[92mINFO [0m:      	  13: { 'eval_acc': '2.7310e-01',
+[92mINFO [0m:      	        'eval_loss': '1.9863e+00',
+[92mINFO [0m:      	        'time': '1.3507e+02'},
+[92mINFO [0m:      	  14: { 'eval_acc': '2.9020e-01',
+[92mINFO [0m:      	        'eval_loss': '1.9549e+00',
+[92mINFO [0m:      	        'time': '1.4210e+02'},
+[92mINFO [0m:      	  15: { 'eval_acc': '2.7030e-01',
+[92mINFO [0m:      	        'eval_loss': '1.9729e+00',
+[92mINFO [0m:      	        'time': '1.4923e+02'},
+[92mINFO [0m:      	  16: { 'eval_acc': '2.9860e-01',
+[92mINFO [0m:      	        'eval_loss': '1.9428e+00',
+[92mINFO [0m:      	        'time': '1.5626e+02'},
+[92mINFO [0m:      	  17: { 'eval_acc': '2.6620e-01',
+[92mINFO [0m:      	        'eval_loss': '1.9944e+00',
+[92mINFO [0m:      	        'time': '1.6330e+02'},
+[92mINFO [0m:      	  18: { 'eval_acc': '2.8650e-01',
+[92mINFO [0m:      	        'eval_loss': '1.9202e+00',
+[92mINFO [0m:      	        'time': '1.7043e+02'},
+[92mINFO [0m:      	  19: { 'eval_acc': '2.8460e-01',
+[92mINFO [0m:      	        'eval_loss': '1.9557e+00',
+[92mINFO [0m:      	        'time': '1.7746e+02'},
+[92mINFO [0m:      	  20: { 'eval_acc': '3.0860e-01',
+[92mINFO [0m:      	        'eval_loss': '1.9397e+00',
+[92mINFO [0m:      	        'time': '1.8459e+02'},
+[92mINFO [0m:      	  21: { 'eval_acc': '3.2880e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8843e+00',
+[92mINFO [0m:      	        'time': '1.9173e+02'},
+[92mINFO [0m:      	  22: { 'eval_acc': '2.9740e-01',
+[92mINFO [0m:      	        'eval_loss': '1.9546e+00',
+[92mINFO [0m:      	        'time': '1.9886e+02'},
+[92mINFO [0m:      	  23: { 'eval_acc': '2.8010e-01',
+[92mINFO [0m:      	        'eval_loss': '1.9377e+00',
+[92mINFO [0m:      	        'time': '2.0599e+02'},
+[92mINFO [0m:      	  24: { 'eval_acc': '3.1760e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8984e+00',
+[92mINFO [0m:      	        'time': '2.1313e+02'},
+[92mINFO [0m:      	  25: { 'eval_acc': '3.2410e-01',
+[92mINFO [0m:      	        'eval_loss': '1.9034e+00',
+[92mINFO [0m:      	        'time': '2.2026e+02'},
+[92mINFO [0m:      	  26: { 'eval_acc': '3.1920e-01',
+[92mINFO [0m:      	        'eval_loss': '1.9371e+00',
+[92mINFO [0m:      	        'time': '2.2729e+02'},
+[92mINFO [0m:      	  27: { 'eval_acc': '3.0580e-01',
+[92mINFO [0m:      	        'eval_loss': '1.9679e+00',
+[92mINFO [0m:      	        'time': '2.3442e+02'},
+[92mINFO [0m:      	  28: { 'eval_acc': '3.2070e-01',
+[92mINFO [0m:      	        'eval_loss': '1.9043e+00',
+[92mINFO [0m:      	        'time': '2.4146e+02'},
+[92mINFO [0m:      	  29: { 'eval_acc': '2.9920e-01',
+[92mINFO [0m:      	        'eval_loss': '1.9230e+00',
+[92mINFO [0m:      	        'time': '2.4860e+02'},
+[92mINFO [0m:      	  30: { 'eval_acc': '3.2060e-01',
+[92mINFO [0m:      	        'eval_loss': '1.9190e+00',
+[92mINFO [0m:      	        'time': '2.5573e+02'},
+[92mINFO [0m:      	  31: { 'eval_acc': '3.2300e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8952e+00',
+[92mINFO [0m:      	        'time': '2.6277e+02'},
+[92mINFO [0m:      	  32: { 'eval_acc': '3.1740e-01',
+[92mINFO [0m:      	        'eval_loss': '1.9098e+00',
+[92mINFO [0m:      	        'time': '2.6990e+02'},
+[92mINFO [0m:      	  33: { 'eval_acc': '3.0770e-01',
+[92mINFO [0m:      	        'eval_loss': '1.9359e+00',
+[92mINFO [0m:      	        'time': '2.7703e+02'},
+[92mINFO [0m:      	  34: { 'eval_acc': '3.3290e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8925e+00',
+[92mINFO [0m:      	        'time': '2.8417e+02'},
+[92mINFO [0m:      	  35: { 'eval_acc': '3.2960e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8728e+00',
+[92mINFO [0m:      	        'time': '2.9120e+02'},
+[92mINFO [0m:      	  36: { 'eval_acc': '3.4290e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8695e+00',
+[92mINFO [0m:      	        'time': '2.9833e+02'},
+[92mINFO [0m:      	  37: { 'eval_acc': '3.3320e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8885e+00',
+[92mINFO [0m:      	        'time': '3.0547e+02'},
+[92mINFO [0m:      	  38: { 'eval_acc': '3.4180e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8906e+00',
+[92mINFO [0m:      	        'time': '3.1250e+02'},
+[92mINFO [0m:      	  39: { 'eval_acc': '3.3660e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8905e+00',
+[92mINFO [0m:      	        'time': '3.1963e+02'},
+[92mINFO [0m:      	  40: { 'eval_acc': '3.1030e-01',
+[92mINFO [0m:      	        'eval_loss': '1.9250e+00',
+[92mINFO [0m:      	        'time': '3.2676e+02'},
+[92mINFO [0m:      	  41: { 'eval_acc': '3.4940e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8306e+00',
+[92mINFO [0m:      	        'time': '3.3390e+02'},
+[92mINFO [0m:      	  42: { 'eval_acc': '3.3950e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8886e+00',
+[92mINFO [0m:      	        'time': '3.4103e+02'},
+[92mINFO [0m:      	  43: { 'eval_acc': '3.4570e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8768e+00',
+[92mINFO [0m:      	        'time': '3.4817e+02'},
+[92mINFO [0m:      	  44: { 'eval_acc': '3.4440e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8639e+00',
+[92mINFO [0m:      	        'time': '3.5530e+02'},
+[92mINFO [0m:      	  45: { 'eval_acc': '3.4470e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8675e+00',
+[92mINFO [0m:      	        'time': '3.6233e+02'},
+[92mINFO [0m:      	  46: { 'eval_acc': '3.5980e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8554e+00',
+[92mINFO [0m:      	        'time': '3.6947e+02'},
+[92mINFO [0m:      	  47: { 'eval_acc': '3.4220e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8526e+00',
+[92mINFO [0m:      	        'time': '3.7650e+02'},
+[92mINFO [0m:      	  48: { 'eval_acc': '3.3070e-01',
+[92mINFO [0m:      	        'eval_loss': '1.9254e+00',
+[92mINFO [0m:      	        'time': '3.8363e+02'},
+[92mINFO [0m:      	  49: { 'eval_acc': '3.2660e-01',
+[92mINFO [0m:      	        'eval_loss': '1.9109e+00',
+[92mINFO [0m:      	        'time': '3.9066e+02'},
+[92mINFO [0m:      	  50: { 'eval_acc': '3.4180e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8938e+00',
+[92mINFO [0m:      	        'time': '3.9781e+02'},
+[92mINFO [0m:      	  51: { 'eval_acc': '3.5830e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8031e+00',
+[92mINFO [0m:      	        'time': '4.0494e+02'},
+[92mINFO [0m:      	  52: { 'eval_acc': '3.5790e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8369e+00',
+[92mINFO [0m:      	        'time': '4.1198e+02'},
+[92mINFO [0m:      	  53: { 'eval_acc': '3.4210e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8814e+00',
+[92mINFO [0m:      	        'time': '4.1911e+02'},
+[92mINFO [0m:      	  54: { 'eval_acc': '3.6650e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8183e+00',
+[92mINFO [0m:      	        'time': '4.2624e+02'},
+[92mINFO [0m:      	  55: { 'eval_acc': '3.7400e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8201e+00',
+[92mINFO [0m:      	        'time': '4.3337e+02'},
+[92mINFO [0m:      	  56: { 'eval_acc': '3.6570e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8371e+00',
+[92mINFO [0m:      	        'time': '4.4051e+02'},
+[92mINFO [0m:      	  57: { 'eval_acc': '3.3980e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8791e+00',
+[92mINFO [0m:      	        'time': '4.4765e+02'},
+[92mINFO [0m:      	  58: { 'eval_acc': '3.7780e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8088e+00',
+[92mINFO [0m:      	        'time': '4.5478e+02'},
+[92mINFO [0m:      	  59: { 'eval_acc': '3.5480e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8655e+00',
+[92mINFO [0m:      	        'time': '4.6191e+02'},
+[92mINFO [0m:      	  60: { 'eval_acc': '3.7900e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8291e+00',
+[92mINFO [0m:      	        'time': '4.6904e+02'},
+[92mINFO [0m:      	  61: { 'eval_acc': '3.6400e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8264e+00',
+[92mINFO [0m:      	        'time': '4.7618e+02'},
+[92mINFO [0m:      	  62: { 'eval_acc': '3.6740e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8551e+00',
+[92mINFO [0m:      	        'time': '4.8331e+02'},
+[92mINFO [0m:      	  63: { 'eval_acc': '3.6810e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8248e+00',
+[92mINFO [0m:      	        'time': '4.9044e+02'},
+[92mINFO [0m:      	  64: { 'eval_acc': '3.4770e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8849e+00',
+[92mINFO [0m:      	        'time': '4.9758e+02'},
+[92mINFO [0m:      	  65: { 'eval_acc': '3.8100e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8099e+00',
+[92mINFO [0m:      	        'time': '5.0471e+02'},
+[92mINFO [0m:      	  66: { 'eval_acc': '3.9040e-01',
+[92mINFO [0m:      	        'eval_loss': '1.7823e+00',
+[92mINFO [0m:      	        'time': '5.1174e+02'},
+[92mINFO [0m:      	  67: { 'eval_acc': '3.5460e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8623e+00',
+[92mINFO [0m:      	        'time': '5.1889e+02'},
+[92mINFO [0m:      	  68: { 'eval_acc': '3.7490e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8375e+00',
+[92mINFO [0m:      	        'time': '5.2604e+02'},
+[92mINFO [0m:      	  69: { 'eval_acc': '3.7040e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8570e+00',
+[92mINFO [0m:      	        'time': '5.3317e+02'},
+[92mINFO [0m:      	  70: { 'eval_acc': '3.7260e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8447e+00',
+[92mINFO [0m:      	        'time': '5.4030e+02'},
+[92mINFO [0m:      	  71: { 'eval_acc': '3.5930e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8626e+00',
+[92mINFO [0m:      	        'time': '5.4744e+02'},
+[92mINFO [0m:      	  72: { 'eval_acc': '3.7770e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8176e+00',
+[92mINFO [0m:      	        'time': '5.5457e+02'},
+[92mINFO [0m:      	  73: { 'eval_acc': '3.5390e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8479e+00',
+[92mINFO [0m:      	        'time': '5.6170e+02'},
+[92mINFO [0m:      	  74: { 'eval_acc': '3.6860e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8449e+00',
+[92mINFO [0m:      	        'time': '5.6876e+02'},
+[92mINFO [0m:      	  75: { 'eval_acc': '3.5930e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8591e+00',
+[92mINFO [0m:      	        'time': '5.7589e+02'},
+[92mINFO [0m:      	  76: { 'eval_acc': '3.6830e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8058e+00',
+[92mINFO [0m:      	        'time': '5.8292e+02'},
+[92mINFO [0m:      	  77: { 'eval_acc': '3.6960e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8094e+00',
+[92mINFO [0m:      	        'time': '5.9005e+02'},
+[92mINFO [0m:      	  78: { 'eval_acc': '3.7070e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8439e+00',
+[92mINFO [0m:      	        'time': '5.9719e+02'},
+[92mINFO [0m:      	  79: { 'eval_acc': '3.8990e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8049e+00',
+[92mINFO [0m:      	        'time': '6.0432e+02'},
+[92mINFO [0m:      	  80: { 'eval_acc': '3.8600e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8200e+00',
+[92mINFO [0m:      	        'time': '6.1145e+02'},
+[92mINFO [0m:      	  81: { 'eval_acc': '3.5240e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8585e+00',
+[92mINFO [0m:      	        'time': '6.1860e+02'},
+[92mINFO [0m:      	  82: { 'eval_acc': '3.4850e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8832e+00',
+[92mINFO [0m:      	        'time': '6.2573e+02'},
+[92mINFO [0m:      	  83: { 'eval_acc': '3.7320e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8630e+00',
+[92mINFO [0m:      	        'time': '6.3276e+02'},
+[92mINFO [0m:      	  84: { 'eval_acc': '3.7790e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8150e+00',
+[92mINFO [0m:      	        'time': '6.3979e+02'},
+[92mINFO [0m:      	  85: { 'eval_acc': '3.7600e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8424e+00',
+[92mINFO [0m:      	        'time': '6.4683e+02'},
+[92mINFO [0m:      	  86: { 'eval_acc': '3.6780e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8587e+00',
+[92mINFO [0m:      	        'time': '6.5396e+02'},
+[92mINFO [0m:      	  87: { 'eval_acc': '3.8090e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8312e+00',
+[92mINFO [0m:      	        'time': '6.6099e+02'},
+[92mINFO [0m:      	  88: { 'eval_acc': '3.8290e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8074e+00',
+[92mINFO [0m:      	        'time': '6.6813e+02'},
+[92mINFO [0m:      	  89: { 'eval_acc': '3.5840e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8651e+00',
+[92mINFO [0m:      	        'time': '6.7526e+02'},
+[92mINFO [0m:      	  90: { 'eval_acc': '3.8450e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8175e+00',
+[92mINFO [0m:      	        'time': '6.8229e+02'},
+[92mINFO [0m:      	  91: { 'eval_acc': '3.7660e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8349e+00',
+[92mINFO [0m:      	        'time': '6.8943e+02'},
+[92mINFO [0m:      	  92: { 'eval_acc': '3.7480e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8330e+00',
+[92mINFO [0m:      	        'time': '6.9656e+02'},
+[92mINFO [0m:      	  93: { 'eval_acc': '3.4950e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8928e+00',
+[92mINFO [0m:      	        'time': '7.0369e+02'},
+[92mINFO [0m:      	  94: { 'eval_acc': '3.5500e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8516e+00',
+[92mINFO [0m:      	        'time': '7.1082e+02'},
+[92mINFO [0m:      	  95: { 'eval_acc': '3.8370e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8182e+00',
+[92mINFO [0m:      	        'time': '7.1786e+02'},
+[92mINFO [0m:      	  96: { 'eval_acc': '3.8310e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8146e+00',
+[92mINFO [0m:      	        'time': '7.2500e+02'},
+[92mINFO [0m:      	  97: { 'eval_acc': '3.8390e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8182e+00',
+[92mINFO [0m:      	        'time': '7.3203e+02'},
+[92mINFO [0m:      	  98: { 'eval_acc': '3.9320e-01',
+[92mINFO [0m:      	        'eval_loss': '1.7817e+00',
+[92mINFO [0m:      	        'time': '7.3906e+02'},
+[92mINFO [0m:      	  99: { 'eval_acc': '3.6700e-01',
+[92mINFO [0m:      	        'eval_loss': '1.8742e+00',
+[92mINFO [0m:      	        'time': '7.4620e+02'},
+[92mINFO [0m:      	  100: { 'eval_acc': '3.5830e-01',
+[92mINFO [0m:      	         'eval_loss': '1.8760e+00',
+[92mINFO [0m:      	         'time': '7.5923e+02'}}
+[92mINFO [0m:      	
+[92mINFO [0m:      	ServerApp-side Evaluate Metrics:
+[92mINFO [0m:      	{}
+[92mINFO [0m:      
+[92mINFO [0m:      CSV saved: results/cifar10/2/FedSaSync_fs2_m9.csv
+[36m(ClientAppActor pid=2634112)[0m [2026-05-20 03:18:55,531 E 2634112 2635011] core_worker_process.cc:825: Failed to establish connection to the metrics exporter agent. Metrics will not be exported. Exporter agent status: RpcError: Running out of retries to initialize the metrics agent. rpc_code: 14[32m [repeated 15x across cluster][0m
+[92mINFO [0m:      
