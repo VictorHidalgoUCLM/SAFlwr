@@ -1,4 +1,0 @@
-fs=0 m=10 i=6
-Starting local SuperLink on 127.0.0.1:39093...
-⚠️ Warning: `options.` fields in the SuperLink connection configuration are deprecated. Use `--federation-config` with `flwr run` instead. Alternatively, permanently set your simulation configuration via `flwr federation simulation-config`.
-🎊 Successfully started run 11731588734877838210
