@@ -23,9 +23,9 @@ def main(grid: Grid, context: Context) -> None:
     semiasync_deg: int = int(context.run_config["semiasync-deg"])
     dataset_name: str = context.run_config["dataset-name"]
     number_slow: int = int(context.run_config["number-slow"])
-    execution_number: int = int(context.run_config["exec-number"])
 
     # Load global model
+    torch.manual_seed(42)
     if dataset_name == "uoft-cs/cifar10":
         global_model = Net()
     elif dataset_name == "ylecun/mnist":
@@ -41,18 +41,12 @@ def main(grid: Grid, context: Context) -> None:
         semiasync_deg=semiasync_deg,
         number_slow=number_slow,
         dataset_name=dataset_name,
-        execution_number=execution_number,
         train_metrics_aggr_fn=train_metrics_aggr_fn,
     )
 
     # Start strategy, run FedSaSync for `num_rounds`
-    result = strategy.start(
+    strategy.start(
         grid=grid,
         initial_arrays=arrays,
         num_rounds=num_rounds,
     )
-
-    """# Save final model to disk
-    print("\nSaving final model to disk...")
-    state_dict = result.arrays.to_torch_state_dict()
-    torch.save(state_dict, "final_model.pt")"""

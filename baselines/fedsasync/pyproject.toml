@@ -10,7 +10,7 @@ build-backend = "hatchling.build"
 [project]
 name = "fedsasync"
 version = "1.0.0"
-description = "Base app to create a Flower fedsasync"
+description = "FedSaSync: Semi-asynchronous Federated Learning in Flower"
 license = "Apache-2.0"
 # Dependencies for your Flower App
 dependencies = [
@@ -131,12 +131,11 @@ clientapp = "fedsasync.client_app:app"
 
 # Custom config values accessible via `context.run_config`
 [tool.flwr.app.config]
-name = "FedAvg"
-num-server-rounds = 100
+name = "FedSaSync"
+num-server-rounds = 50
 fraction-train = 1.0
 fraction-evaluate = 1.0
 local-epochs = 1
 semiasync-deg = 10
 number-slow = 0
 dataset-name = "uoft-cs/cifar10"
-exec-number = 1

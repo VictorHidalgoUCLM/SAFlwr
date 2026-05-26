@@ -30,8 +30,7 @@ def save_logs(
         strategy_name: str,
         semiasync_deg: int,
         number_slow: int,
-        dataset_name: str,       
-        execution_number: int, 
+        dataset_name: str,
     ) -> None:
     """Save the federated result in a csv.
 
@@ -61,12 +60,12 @@ def save_logs(
     # Build output path depending on strategy type
     if strategy_name == "FedSaSync":
         path = (
-            f"results/{dataset}/{execution_number}/"
+            f"_static/{dataset}/"
             f"{strategy_name}_fs{number_slow}_m{semiasync_deg}.csv"
         )
     else:
         path = (
-            f"results/{dataset}/{execution_number}/"
+            f"_static/{dataset}/"
             f"{strategy_name}_fs{number_slow}.csv"
         )
 

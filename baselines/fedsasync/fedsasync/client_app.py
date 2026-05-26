@@ -1,6 +1,5 @@
 """baseline: A Flower Baseline."""
 
-import random
 import time
 import torch
 from flwr.app import ArrayRecord, Context, Message, MetricRecord, RecordDict
@@ -24,10 +23,8 @@ def train(msg: Message, context: Context):
     dataset_name = context.run_config["dataset-name"]
     if dataset_name == "uoft-cs/cifar10":
         model = Net()
-        image = "img"
     elif dataset_name == "ylecun/mnist":
         model = Net(input_channels=1, pool_size=4)
-        image = "image"
     arrays = msg.content.array_records["arrays"]
     model.load_state_dict(arrays.to_torch_state_dict())
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -49,7 +46,7 @@ def train(msg: Message, context: Context):
         trainloader,
         local_epochs,
         device,
-        image
+        dataset_name
     )
 
     # End_time counter
@@ -84,7 +81,7 @@ def evaluate(msg: Message, context: Context):
     # Load the data
     partition_id = int(context.node_config["partition-id"])
     num_partitions = int(context.node_config["num-partitions"])
-    _, valloader = load_data(partition_id, num_partitions)
+    _, valloader = load_data(partition_id, num_partitions, dataset_name)
 
     # Call the evaluation function
     eval_loss, eval_acc = test_fn(model, valloader, device, image)

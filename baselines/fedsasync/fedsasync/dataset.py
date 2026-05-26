@@ -4,6 +4,7 @@ from flwr_datasets import FederatedDataset
 from flwr_datasets.partitioner import IidPartitioner
 from torch.utils.data import DataLoader
 from torchvision.transforms import Compose, Normalize, ToTensor
+import torch
 
 FDS = None  # Cache FederatedDataset
 
@@ -37,6 +38,15 @@ def load_data(partition_id: int, num_partitions: int, dataset_name: str = "uoft-
         return batch
 
     partition_train_test = partition_train_test.with_transform(apply_transforms)
-    trainloader = DataLoader(partition_train_test["train"], batch_size=32, shuffle=True)
-    testloader = DataLoader(partition_train_test["test"], batch_size=32)
+    trainloader = DataLoader(
+        partition_train_test["train"],
+        batch_size=32,
+        shuffle=True,
+        generator=torch.Generator().manual_seed(42)
+    )
+    testloader = DataLoader(
+        partition_train_test["test"],
+        batch_size=32,
+        generator=torch.Generator().manual_seed(42)
+    )
     return trainloader, testloader

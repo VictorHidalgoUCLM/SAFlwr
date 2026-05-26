@@ -28,12 +28,19 @@ class Net(nn.Module):
         return self.fc3(x)
 
 
-def train(net, trainloader, epochs, device, img):
+def train(net, trainloader, epochs, device, dataset_name):
     """Train the model on the training set."""
     net.to(device)  # move model to GPU if available
     criterion = torch.nn.CrossEntropyLoss()
     criterion.to(device)
-    optimizer = torch.optim.SGD(net.parameters(), lr=0.1, momentum=0.9)
+    if dataset_name == "uoft-cs/cifar10":
+        lr = 0.01
+        img = "img"
+    elif dataset_name == "ylecun/mnist":
+        lr = 0.05
+        img = "image"
+
+    optimizer = torch.optim.SGD(net.parameters(), lr=lr, momentum=0.9)
     net.train()
     running_loss = 0.0
     for _ in range(epochs):
