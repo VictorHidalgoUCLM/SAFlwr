@@ -1,12 +1,13 @@
-"""baseline: A Flower Baseline."""
+"""FedSaSync: Semi-asynchronous Federated Learning in Flower."""
 
 import torch
 from flwr.app import ArrayRecord, Context
 from flwr.serverapp import Grid, ServerApp
-from .strategy import FedSaSync
-from .utils import train_metrics_aggr_fn
 
 from fedsasync.model import Net
+
+from .strategy import FedSaSync
+from .utils import train_metrics_aggr_fn
 
 # Create ServerApp
 app = ServerApp()
@@ -19,9 +20,9 @@ def main(grid: Grid, context: Context) -> None:
     num_rounds: int = int(context.run_config["num-server-rounds"])
     fraction_train: float = float(context.run_config["fraction-train"])
     fraction_evaluate: float = float(context.run_config["fraction-evaluate"])
-    strategy_name: str = context.run_config["name"]
+    strategy_name: str = str(context.run_config["name"])
     semiasync_deg: int = int(context.run_config["semiasync-deg"])
-    dataset_name: str = context.run_config["dataset-name"]
+    dataset_name: str = str(context.run_config["dataset-name"])
     number_slow: int = int(context.run_config["number-slow"])
 
     # Load global model
@@ -30,6 +31,8 @@ def main(grid: Grid, context: Context) -> None:
         global_model = Net()
     elif dataset_name == "ylecun/mnist":
         global_model = Net(1, 4)
+    else:
+        raise ValueError(f"Unknown dataset: {dataset_name}")
     arrays = ArrayRecord(global_model.state_dict())
 
     # Initialize FedSaSync strategy

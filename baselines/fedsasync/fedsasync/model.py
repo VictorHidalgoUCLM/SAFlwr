@@ -1,4 +1,4 @@
-"""baseline: A Flower Baseline."""
+"""FedSaSync: Semi-asynchronous Federated Learning in Flower."""
 
 import torch
 import torch.nn.functional as F
@@ -30,16 +30,18 @@ class Net(nn.Module):
 
 def train(net, trainloader, epochs, device, dataset_name):
     """Train the model on the training set."""
+    config = {
+        "uoft-cs/cifar10": (0.01, "img"),
+        "ylecun/mnist": (0.05, "image"),
+    }
+    # Error if dataset_name is not in config
+    if dataset_name not in config:
+        raise ValueError(f"Unknown dataset: {dataset_name}")
+    # Set learning rate and img string
+    lr, img = config[dataset_name]
     net.to(device)  # move model to GPU if available
     criterion = torch.nn.CrossEntropyLoss()
     criterion.to(device)
-    if dataset_name == "uoft-cs/cifar10":
-        lr = 0.01
-        img = "img"
-    elif dataset_name == "ylecun/mnist":
-        lr = 0.05
-        img = "image"
-
     optimizer = torch.optim.SGD(net.parameters(), lr=lr, momentum=0.9)
     net.train()
     running_loss = 0.0

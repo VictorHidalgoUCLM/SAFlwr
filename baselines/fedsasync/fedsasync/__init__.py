@@ -1,1 +1,1 @@
-"""baseline: A Flower Baseline."""
+"""FedSaSync: Semi-asynchronous Federated Learning in Flower."""

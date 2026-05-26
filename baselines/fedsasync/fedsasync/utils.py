@@ -1,18 +1,24 @@
-"""FedSaSync: A Flower Semi-Asynchronous strategy based on message-based FedAvg aggregation."""
+"""FedSaSync: Semi-asynchronous Federated Learning in Flower."""
 import csv
-from logging import INFO
-from flwr.common import log, RecordDict, MetricRecord
-from flwr.serverapp.strategy.result import Result
 import os
+from logging import INFO
+
+from flwr.common import MetricRecord, RecordDict, log
+from flwr.serverapp.strategy.result import Result
 from flwr.serverapp.strategy.strategy_utils import aggregate_metricrecords
+
 
 def train_metrics_aggr_fn(
     records: list[RecordDict], weighting_metric_name: str
 ) -> MetricRecord:
-    """Personalized train_metrics_aggr_fn to delete client times"""
-    train_times = []
+    """Personalized train_metrics_aggr_fn to delete client times."""
+    train_times: list[float] = []
     for record in records:
-        train_times.append(record.metric_records["metrics"]["train_time"])
+        value = record.metric_records["metrics"]["train_time"]
+        if isinstance(value, list):
+            raise ValueError("train_time should never be a list")
+
+        train_times.append(float(value))
         record.metric_records["metrics"].pop("train_time", None)
     mean_time = sum(train_times) / len(train_times)
 
@@ -71,7 +77,7 @@ def save_logs(
 
     os.makedirs(os.path.dirname(path), exist_ok=True)
 
-    with open(path, "w", newline="") as f:
+    with open(path, "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
 
         # Fixed column order for easier post-processing
@@ -84,12 +90,20 @@ def save_logs(
 
         # Use rounds available in evaluation metrics
         rounds = sorted(result.evaluate_metrics_clientapp.keys())
+        eval_metrics: MetricRecord | None
+        train_metrics: MetricRecord | None
+
         for rnd in rounds:
             # Get evaluation metrics for this round (if available)
-            eval_metrics = result.evaluate_metrics_clientapp.get(rnd, {})
+            eval_metrics = result.evaluate_metrics_clientapp.get(rnd, None)
 
             # Get training metrics for this round (if available)
-            train_metrics = result.train_metrics_clientapp.get(rnd, {})
+            train_metrics = result.train_metrics_clientapp.get(rnd, None)
+
+            if eval_metrics is None:
+                continue
+            if train_metrics is None:
+                continue
 
             # Write a single row per round
             writer.writerow([
@@ -100,4 +114,4 @@ def save_logs(
             ])
 
     # Log completion
-    log(INFO, f"CSV saved: {path}")
+    log(INFO, "CSV saved: %s", path)

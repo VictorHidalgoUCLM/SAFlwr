@@ -1,30 +1,31 @@
-"""FedSaSync: A Flower Semi-Asynchronous strategy based on message-based FedAvg aggregation."""
-from typing import Dict
+"""FedSaSync: Semi-asynchronous Federated Learning in Flower."""
+import io
 import random
-
-from flwr.serverapp.strategy import FedAvg
-
+import time
 from collections.abc import Callable, Iterable
 from logging import INFO
+from typing import Dict
 
 from flwr.app import MessageType
 from flwr.common import (
     ArrayRecord,
     ConfigRecord,
-    MetricRecord,
     Message,
+    MetricRecord,
     RecordDict,
     log,
 )
 from flwr.server import Grid
-import io, time
-from flwr.serverapp.strategy.strategy_utils import log_strategy_start_info
+from flwr.serverapp.strategy import FedAvg
 from flwr.serverapp.strategy.result import Result
+from flwr.serverapp.strategy.strategy_utils import log_strategy_start_info
+
 from .utils import save_logs
+
 
 class FedSaSync(FedAvg):
     """Federated Semi-Asynchronous strategy.
-    
+
     Implementation based on 'TODO'
 
     Parameters
@@ -129,21 +130,27 @@ class FedSaSync(FedAvg):
             of all connected node IDs.
         """
         all_nodes = list(grid.get_node_ids())   # Get all available nodes in grid
-        running_nodes = list(msg_dict.keys())   # Get all nodes that are currently running
-        free_nodes = list(set(all_nodes) - set(running_nodes))   
-
+        running_nodes = list(map(int, msg_dict.keys())) # Get all nodes that are currently running
+        free_nodes = list(set(all_nodes) - set(running_nodes))
         # Sample nodes that are not currently running
         random.seed(42)
+
+        # Sample only from free nodes, up to the specified sample size
         sampled_nodes = random.sample(
             free_nodes,
-            min(len(free_nodes), sample_size)   # Sample only from free nodes, up to the specified sample size
+            min(len(free_nodes), sample_size)
         )
         return sampled_nodes, all_nodes
 
 
     # Overwrite of FedAvg configure_train to implement semi-asynchronous sampling
     def configure_train(
-        self, server_round: int, arrays: ArrayRecord, config: ConfigRecord, grid: Grid, msg_dict: Dict[str, str]
+        self,
+        server_round: int,
+        arrays: ArrayRecord,
+        config: ConfigRecord,
+        grid: Grid,
+        msg_dict: Dict[str, str] | None = None
     ) -> Iterable[Message]:
         """Configure the next round of federated training."""
         # Do not configure federated train if fraction_train is 0.
@@ -152,7 +159,11 @@ class FedSaSync(FedAvg):
         # Sample nodes semiasynchronously, based on current execution state of nodes
         num_nodes = int(len(list(grid.get_node_ids())) * self.fraction_train)
         sample_size = max(num_nodes, self.min_train_nodes)
+
+        if msg_dict is None:
+            msg_dict = {}
         node_ids, num_total = self.sample_nodes_semiasync(grid, msg_dict, sample_size)
+
         log(
             INFO,
             "configure_train: Sampled %s nodes (out of %s)",
@@ -174,11 +185,12 @@ class FedSaSync(FedAvg):
         grid: Grid,
         messages: Iterable[Message],
         timeout: float | None = None,
-        msg_dict: Dict[str, str] = {},
+        msg_dict: Dict[str, str] | None = None,
         sync_deg: int = 1,
         last_round: bool = False,
     ) -> Iterable[Message]:
-        """Push messages to specified node IDs and pull semiasynchronously 'M' reply messages.
+        """Push messages to specified node IDs and pull semiasynchronously 'M' reply
+        messages.
 
         This method sends a list of messages to their destination node IDs and then
         waits for 'M' replies. It continues to pull replies until either M replies are
@@ -188,13 +200,17 @@ class FedSaSync(FedAvg):
         msg_ids = grid.push_messages(messages)
 
         # Register busy nodes in msg_dict
+        if msg_dict is None:
+            msg_dict = {}
+
         for msg_id, msg in zip(msg_ids, messages):
-            msg_dict[msg.metadata.dst_node_id] = msg_id # node_id: msg_id
+            node_id = str(msg.metadata.dst_node_id)
+            msg_dict[node_id] = msg_id # node_id: msg_id
         del messages
 
         # Debug mode: print the msg_dict after pushing messages
         # print("msg_dict:", msg_dict)
-        
+
         # Pull messages
         all_msg_ids = set(msg_dict.values())    # Get all message IDs that are currently running
         end_time = time.time() + (timeout if timeout is not None else 0.0)
@@ -206,7 +222,7 @@ class FedSaSync(FedAvg):
                 {msg.metadata.reply_to_message_id for msg in res_msgs}
             )
             # Round end condition
-            if not last_round:  # If not last round, continue if at least M replies have been received
+            if not last_round:  # If not last round, continue if at least M replies are received
                 if len(ret) >= sync_deg:
                     break
             else:   # If last round, wait all executing clients
@@ -294,26 +310,26 @@ class FedSaSync(FedAvg):
 
         # List of messages running in grid
         msg_dict: Dict[str, str] = {}
-        
+
         # Select sync_deg based on strategy name
         train_clients = max(
             int(self.fraction_train * int(len(list(grid.get_node_ids())))),
             self.min_train_nodes,
         )
 
-        if self.strategy_name == "FedAvg":
-            # For FedAvg, sync_deg is equal to the number of training clients (fully synchronous)
-            sync_deg = train_clients
-        elif self.strategy_name == "FedSaSync":
-            # For FedSaSync, sync_deg is determined by the semiasync_deg parameter (semi-asynchronous)
+        if self.strategy_name == "FedSaSync":
+            # For FedSaSync, sync_deg is determined by the semiasync_deg parameter (semi-async)
             sync_deg = min(self.semiasync_deg, train_clients)
+        else:
+            # For any strategy, sync_deg is equal to the number of training clients (fully sync)
+            sync_deg = train_clients
 
         # print("Sync degree:", sync_deg)
 
         for current_round in range(1, num_rounds + 1):
             log(INFO, "")
             log(INFO, "[ROUND %s/%s]", current_round, num_rounds)
-            last_round = (current_round == num_rounds)
+            last_round = current_round == num_rounds
             # -----------------------------------------------------------------
             # --- TRAINING (CLIENTAPP-SIDE) -----------------------------------
             # -----------------------------------------------------------------
@@ -369,6 +385,8 @@ class FedSaSync(FedAvg):
                 current_round,
                 evaluate_replies,
             )
+            if agg_evaluate_metrics is None:
+                agg_evaluate_metrics = MetricRecord()
             agg_evaluate_metrics["time"] = time.time() - t_start
 
             # Log training metrics and append to history
@@ -396,7 +414,7 @@ class FedSaSync(FedAvg):
         for line in io.StringIO(str(result)):
             log(INFO, "\t%s", line.strip("\n"))
         log(INFO, "")
-        
+
         # Call utility function to save logs
         save_logs(
             result,

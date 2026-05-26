@@ -1,6 +1,7 @@
-"""baseline: A Flower Baseline."""
+"""FedSaSync: Semi-asynchronous Federated Learning in Flower."""
 
 import time
+
 import torch
 from flwr.app import ArrayRecord, Context, Message, MetricRecord, RecordDict
 from flwr.clientapp import ClientApp
@@ -20,11 +21,14 @@ def train(msg: Message, context: Context):
     # Init_time counter
     init_time = time.perf_counter()
     # Load the model and initialize it with the received weights
-    dataset_name = context.run_config["dataset-name"]
+    dataset_name = str(context.run_config["dataset-name"])
     if dataset_name == "uoft-cs/cifar10":
         model = Net()
     elif dataset_name == "ylecun/mnist":
         model = Net(input_channels=1, pool_size=4)
+    else:
+        raise ValueError(f"Unknown dataset: {dataset_name}")
+
     arrays = msg.content.array_records["arrays"]
     model.load_state_dict(arrays.to_torch_state_dict())
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -67,13 +71,16 @@ def train(msg: Message, context: Context):
 def evaluate(msg: Message, context: Context):
     """Evaluate the model on local data."""
     # Load the model and initialize it with the received weights
-    dataset_name = context.run_config["dataset-name"]
+    dataset_name = str(context.run_config["dataset-name"])
     if dataset_name == "uoft-cs/cifar10":
         model = Net()
         image = "img"
     elif dataset_name == "ylecun/mnist":
         model = Net(input_channels=1, pool_size=4)
         image = "image"
+    else:
+        raise ValueError(f"Unknown dataset: {dataset_name}")
+
     arrays = msg.content.array_records["arrays"]
     model.load_state_dict(arrays.to_torch_state_dict())
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
