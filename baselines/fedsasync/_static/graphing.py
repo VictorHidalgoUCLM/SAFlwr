@@ -24,7 +24,7 @@ def generate_comparison_plots():
 
     for ds in DATASETS:
         fig, axes = plt.subplots(
-            1, len(FS_VALUES), figsize=(8 * len(FS_VALUES), 5.5), sharey=True
+            1, len(FS_VALUES), figsize=(5 * len(FS_VALUES), 4.5), sharey=True
         )
 
         # Fix case with a single subplot
@@ -40,7 +40,7 @@ def generate_comparison_plots():
                     label = "FedAvg"
                 else:
                     file_name = f"FedSaSync_fs{fs}_m{m}.csv"
-                    label = f"FedSaSync (m = {m})"
+                    label = f"FedSaSync ($M = {m}$)"
 
                 full_path = os.path.join(BASE_PATH, ds, file_name)
 
@@ -66,13 +66,22 @@ def generate_comparison_plots():
 
                 df = df.sort_values("time")
 
-                # Training percentage
-                train_time_total = df["train_time"].sum()
+                # Total elapsed time
                 total_time = df["time"].iloc[-1]
-                train_pct = train_time_total / total_time * 100
+
+                # Loss decrease (Δloss)
+                loss_decrease = df["loss"].iloc[0] - df["loss"].iloc[-1]
+
+                # Δloss / second
+                loss_per_sec = loss_decrease / total_time if total_time > 0 else 0.0
 
                 results.append(
-                    {"dataset": ds, "fs": fs, "m": m, "train_pct": train_pct}
+                    {
+                        "dataset": ds,
+                        "fs": fs,
+                        "m": m,
+                        "loss_per_sec": loss_per_sec,
+                    }
                 )
 
                 # Plot on current subplot
@@ -105,8 +114,8 @@ def generate_comparison_plots():
 
         plt.tight_layout(rect=[0, 0, 1, 1])
         plt.savefig(
-            os.path.join(BASE_PATH, f"{ds}_comparison.png"),
-            dpi=300,
+            os.path.join(BASE_PATH, f"{ds}_comparison.svg"),
+            format="svg",
             bbox_inches="tight",
         )
 
@@ -121,7 +130,7 @@ def generate_comparison_plots():
     for dataset in datasets:
         df_ds = results_df[results_df["dataset"] == dataset]
 
-        table_data = df_ds.pivot(index="fs", columns="m", values="train_pct")
+        table_data = df_ds.pivot(index="fs", columns="m", values="loss_per_sec")
 
         # Column separation
         cols = list(table_data.columns)
@@ -132,7 +141,8 @@ def generate_comparison_plots():
         table_data = table_data[new_order]
 
         col_labels = [
-            "FedAvg" if m == 0 else f"FedSaSync (m = {m})" for m in table_data.columns
+            "FedAvg" if m == 0 else rf"FedSaSync ($M={m}$)"
+            for m in table_data.columns
         ]
 
         row_labels = [f"Slow = {slow}" for slow in table_data.index]
@@ -140,7 +150,7 @@ def generate_comparison_plots():
         fig, ax = plt.subplots(figsize=(10, 3))
         ax.axis("off")
 
-        cell_text = table_data.round(2).astype(str) + "%"
+        cell_text = table_data.round(4).astype(str)
 
         table = ax.table(
             cellText=cell_text.values,
@@ -164,12 +174,10 @@ def generate_comparison_plots():
         table.set_fontsize(10)
         table.scale(1.2, 1.8)
 
-        fig.suptitle(f"{dataset} - Train percentage", fontsize=14, y=0.8)
-
         plt.tight_layout(pad=0)
         plt.savefig(
-            f"{BASE_PATH}/{dataset}_train_pct.png",
-            dpi=300,
+            os.path.join(BASE_PATH, f"{dataset}_efficiency.svg"),
+            format="svg",
             bbox_inches="tight",
             pad_inches=0,
         )

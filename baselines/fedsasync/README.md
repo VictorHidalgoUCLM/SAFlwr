@@ -1,34 +1,23 @@
 ---
-title: Semi-asynchronous Federated Learning: An Extension of Flower and Performance Evaluation
-url: https://arxiv.org/abs/2007.14390 # TODO: update with the link to your paper
+title: "Semi-asynchronous Federated Learning in Flower: Framework Extension and Performance Assessment"
+url: https://arxiv.org/abs/2606.24230
 labels: [Federated Learning, Semi-Asynchronous, System Heterogeneity, Flower]
 dataset: [CIFAR10, MNIST]
 ---
-
-```bash
-# At anypoint during the process of creating your baseline you can 
-# run the formatting script. For this do:
-cd .. # so you are in the `flower/baselines` directory
-
-# Run the formatting script (it will auto-correct issues if possible)
-./dev/format-baseline.sh baseline
-
-# Then, if the above is all good, run the tests.
-./dev/test-baseline.sh baseline
-```
-
 # FedSaSync: Semi-asynchronous Federated Learning in Flower
 
-**Paper:** # TODO
+> Note: If you use this baseline in your work, please remember to cite the original authors of the paper as well as the Flower paper.
+
+**Paper:** [arxiv.org/abs/2606.24230](https://arxiv.org/abs/2606.24230)
 
 **Authors:** Víctor Hidalgo-Izquierdo, Carmen Carrión, Blanca Caminero
 
-**Abstract:** # TODO
+**Abstract:** This paper presents an extension of the Flower federated learning framework to support Semi-Asynchronous Federated Learning. The proposed approach adapts the traditional synchronous paradigm to better handle client heterogeneity and straggler effects. By introducing a semi-asynchronous training strategy, the system allows partial synchronization among clients while maintaining training efficiency and scalability. We implement and evaluate the proposed modification within Flower, instantiated as the FedSaSync strategy, demonstrating improved robustness and reduced idle time compared to fully synchronous baselines in heterogeneous environments. The results show that SAFL can balance convergence stability and system efficiency in heterogeneous environments typical of edge and distributed learning scenarios. 
 
 
 ## About this baseline
 
-**What’s implemented:** The code in this directory is used to execute the experiments proposed in *Semi-asynchronous Federated Learning: An Extension of Flower and Performance Evaluation* (*REF*) for CIFAR10 and MNIST, which proposed the FedSaSync algorithm. Concretely, the results are exposed for both datasets in Figures *X* and *X* # TODO
+**What’s implemented:** The code in this directory is used to execute the experiments proposed in *Semi-asynchronous Federated Learning in Flower: Framework Extension and Performance Assessment* (Hidalgo et al., 2026) for CIFAR10 and MNIST, which proposed the FedSaSync algorithm. Concretely, the results are exposed for both datasets in Figures 4 and 5, and in Tables 3 and 4
 
 **Datasets:** CIFAR10, MNIST
 
@@ -106,7 +95,7 @@ bash run_cifar10_experiments.sh # CIFAR10
 bash run_mnist_experiments.sh   # MNIST
 ```
 
-We include a python script to automatically print several graphs to summarise the executions (see `_static/graphing.py`). Depending on the experiments performed, change the global configuration to define what will be printed on the plots. All results are saved in `_static`. Each experiment generates two visualizations: a comparative plot grouped by the number of slow clients to analyze the impact of different semi-asynchronous degrees, and a summary table showing the mean training percentage under each configuration and its effect on effective training time. To generate these visualizations, proceed as follows:
+We include a python script to automatically print several graphs to summarise the executions (see `_static/graphing.py`). Depending on the experiments performed, change the global configuration to define what will be printed on the plots. All results are saved in `_static`. Each experiment generates two visualizations: a comparative plot grouped by the number of slow clients to analyze the impact of different semi-asynchronous degrees, and a summary table showing the mean training efficiency under each configuration, measured on loss per second. To generate these visualizations, proceed as follows:
 
 ```bash
 python _static/graphing.py  # Plot the results after executing
@@ -114,10 +103,10 @@ python _static/graphing.py  # Plot the results after executing
 
 Results for CIFAR10:
 
-![](_static/cifar10_comparison.png)
-![](_static/cifar10_train_pct.png)
+![CIFAR10 loss over time comparison](_static/cifar10_comparison.svg)
+![CIFAR10 efficiency (loss/s)](_static/cifar10_efficiency.svg)
 
 Results for MNIST:
 
-![](_static/mnist_comparison.png)
-![](_static/mnist_train_pct.png)
+![MNIST loss over time comparison](_static/mnist_comparison.svg)
+![MNIST efficiency (loss/s)](_static/mnist_efficiency.svg)
