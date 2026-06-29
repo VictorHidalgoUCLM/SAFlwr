@@ -21,7 +21,7 @@ dataset: [CIFAR10, MNIST]
 
 **Datasets:** CIFAR10, MNIST
 
-**Hardware Setup:** These experiments were run on a desktop machine with an 12th Gen Intel(R) Core(TM) i7-12700 (20 CPU threads). Any machine with with 4 CPU cores or more would be able to run it in a reasonable amount of time. Note: the entire experiment runs on a CPU-only mode, but GPU support is included on code.
+**Hardware Setup:** These experiments were run on a desktop machine with a 12th Gen Intel(R) Core(TM) i7-12700 (20 CPU threads). Any machine with 4 CPU cores or more would be able to run it in a reasonable amount of time. Note: by default, the entire experiment runs in CPU-only mode, but GPU support is included in the code.
 
 **Contributors:** Víctor Hidalgo-Izquierdo, Carmen Carrión, Blanca Caminero
 

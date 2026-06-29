@@ -9,8 +9,10 @@ from torchvision.transforms import Compose, Normalize, ToTensor
 FDS = None  # Cache FederatedDataset
 
 
-def load_data(partition_id: int, num_partitions: int, dataset_name: str = "uoft-cs/cifar10"):
-    """Load partition CIFAR10 data."""
+def load_data(
+    partition_id: int, num_partitions: int, dataset_name: str = "uoft-cs/cifar10"
+):
+    """Load a dataset partition (CIFAR10 or MNIST) and return train/test DataLoaders."""
     # Only initialize `FederatedDataset` once
     global FDS  # pylint: disable=global-statement
     if FDS is None:

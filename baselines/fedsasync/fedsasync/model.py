@@ -55,7 +55,7 @@ def train(net, trainloader, epochs, device, dataset_name):
             optimizer.step()
             running_loss += loss.item()
 
-    avg_trainloss = running_loss / len(trainloader)
+    avg_trainloss = running_loss / (len(trainloader) * epochs) if epochs > 0 else 0.0
     return avg_trainloss
 
 

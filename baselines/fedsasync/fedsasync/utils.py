@@ -32,12 +32,12 @@ def train_metrics_aggr_fn(
     return aggregated_metrics
 
 def save_logs(
-        result: Result,
-        strategy_name: str,
-        semiasync_deg: int,
-        number_slow: int,
-        dataset_name: str,
-    ) -> None:
+    result: Result,
+    strategy_name: str,
+    semiasync_deg: int,
+    number_slow: int,
+    dataset_name: str,
+) -> None:
     """Save the federated result in a csv.
 
     Utility function to write the federated final result on a csv, defined by
@@ -51,8 +51,8 @@ def save_logs(
         Strategy name used to build the output path.
     semiasync_deg : int
         Semi-asynchronous degree (M) of the experiment.
-    number_slow : float
-        Fraction of slow clients in the experiment.
+    number_slow : int
+        Number of slow clients in the experiment.
     dataset_name : str
         Dataset name used for the experiment.
     """

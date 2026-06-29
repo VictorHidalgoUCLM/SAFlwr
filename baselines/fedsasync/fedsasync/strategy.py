@@ -26,7 +26,7 @@ from .utils import save_logs
 class FedSaSync(FedAvg):
     """Federated Semi-Asynchronous strategy.
 
-    Implementation based on 'TODO'
+    Implementation based on Hidalgo-Izquierdo et al. (2026), arXiv:2606.24230.
 
     Parameters
     ----------
@@ -112,14 +112,14 @@ class FedSaSync(FedAvg):
     def sample_nodes_semiasync(
         self, grid: Grid, msg_dict: Dict[str, str], sample_size: int
     ) -> tuple[list[int], list[int]]:
-        """Sample semiasynchornously the specified number of nodes using the Grid.
+        """Sample semi-asynchronously the specified number of nodes using the Grid.
 
         Parameters
         ----------
         grid : Grid
             The grid object.
         msg_dict : Dict[str, str]
-            A dictionary mapping message IDs to destination node IDs.
+            A dictionary mapping node IDs (as strings) to in-flight message IDs.
         sample_size : int
             The number of nodes to sample.
 
