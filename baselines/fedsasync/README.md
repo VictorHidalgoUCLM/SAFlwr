@@ -80,12 +80,12 @@ pip install -e .
 To run this FedSaSync, first ensure that your environment is properly activated as described above. For unique executions, do the following:
 
 ```bash
-flwr run .  # this will run using the default settings in the `pyproject.toml`
+flwr run . --federation-config 'num-supernodes=10' # this will run using the default settings in the `pyproject.toml` with 10 clients
 
 # you can override settings directly from the command line
-flwr run . --run-config "name='FedAvg' number-slow=1"   # for FedAvg with 1 slow client
+flwr run . --federation-config 'num-supernodes=10' --run-config "name='FedAvg' number-slow=1"   # for FedAvg with 1 slow client
 # for FedSaSync with 2 slow clients, semiasync degree 8, mnist dataset
-flwr run . --run-config "num-server-rounds=25 semiasync-deg=8 number-slow=2 dataset-name='ylecun/mnist'"    
+flwr run . --federation-config 'num-supernodes=10' --run-config "num-server-rounds=25 semiasync-deg=8 number-slow=2 dataset-name='ylecun/mnist'"    
 ```
 
 The baseline includes the scripts `run_cifar10_experiments.sh` and `run_mnist_experiments.sh`, which are designed to execute the experiments reported in the paper using the predefined configurations. The configurations are described on the table below, at Experimental Setup:
