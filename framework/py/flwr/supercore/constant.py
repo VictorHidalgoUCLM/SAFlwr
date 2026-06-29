@@ -18,7 +18,7 @@
 from __future__ import annotations
 
 import os
-from enum import Enum
+from enum import StrEnum
 
 from flwr.common.constant import (
     FLWR_DIR,
@@ -105,7 +105,7 @@ MAX_NAME_LENGTH = 32  # max length for app names; also used for federation names
 NOOP_FEDERATION = f"@{NOOP_ACCOUNT_NAME}/default"
 NOOP_FEDERATION_DESCRIPTION = "A federation for testing and development purposes."
 DEFAULT_SIMULATION_CONFIG = SimulationConfig(
-    num_supernodes=10,
+    num_supernodes=2,
     client_resources_num_cpus=2,
     client_resources_num_gpus=0.0,
     backend="ray",
@@ -115,6 +115,11 @@ DEFAULT_SIMULATION_CONFIG = SimulationConfig(
     init_args_logging_level="WARNING",
     init_args_log_to_driver=True,
 )
+
+
+# Default federation names for every Flower account
+DEFAULT_FEDERATION_SIMULATION = "workspace"
+
 
 # Constants for exit handling
 FORCE_EXIT_TIMEOUT_SECONDS = 5  # Used in `flwr_exit` function
@@ -132,6 +137,11 @@ SUPEREXEC_AUTH_SECRET_CONTEXT = b"superexec-auth-v1"
 MIN_TIMESTAMP_DIFF_SECONDS = -SYSTEM_TIME_TOLERANCE
 MAX_TIMESTAMP_DIFF_SECONDS = TIMESTAMP_TOLERANCE + SYSTEM_TIME_TOLERANCE
 
+# Constants for Flower runtime version metadata
+FLWR_PACKAGE_NAME_METADATA_KEY = "flwr-package-name"
+FLWR_PACKAGE_VERSION_METADATA_KEY = "flwr-package-version"
+FLWR_COMPONENT_NAME_METADATA_KEY = "flwr-component-name"
+VERSION_INCOMPATIBILITY_MESSAGE_METADATA_KEY = "flwr-version-incompatibility-message"
 
 # System message type
 SYSTEM_MESSAGE_TYPE = "system"
@@ -147,6 +157,9 @@ SQLITE_PRAGMAS = (
     ("mmap_size", "268435456"),  # 256MB memory-mapped I/O
 )
 
+# Constants for SQL LinkState
+SQL_ALLOWED_DIALECTS: frozenset[str] = frozenset({"sqlite"})
+
 
 class NodeStatus:
     """Event log writer types."""
@@ -161,7 +174,7 @@ class NodeStatus:
         raise TypeError(f"{cls.__name__} cannot be instantiated.")
 
 
-class InvitationStatus(str, Enum):
+class InvitationStatus(StrEnum):
     """Status of a federation invitation."""
 
     PENDING = "pending"
@@ -171,21 +184,68 @@ class InvitationStatus(str, Enum):
     EXPIRED = "expired"
 
 
-class RunType(str, Enum):
-    """Supported run types."""
-
-    SERVER_APP = "serverapp"
-    SIMULATION = "simulation"
-
-
-class RunTime(str, Enum):
+class RunTime(StrEnum):
     """Supported runtimes."""
 
     DEPLOYMENT = "deployment"
     SIMULATION = "simulation"
 
 
-class ActionType(str, Enum):
+class ExecutorType(StrEnum):
+    """Supported SuperExec executor types."""
+
+    SUBPROCESS = "subprocess"
+    KUBERNETES = "kubernetes"
+
+
+class TaskType(StrEnum):
+    """Supported task types."""
+
+    SERVER_APP = "flwr-serverapp"
+    CLIENT_APP = "flwr-clientapp"
+    SIMULATION = "flwr-simulation"
+    AGENT_APP = "flwr-agentapp"
+    MODEL = "flwr-model"
+    CONNECTOR = "flwr-connector"
+
+
+TASK_TYPE_TO_APPIO_API_ADDRESS_ARG: dict[TaskType, str] = {
+    TaskType.AGENT_APP: "--serverappio-api-address",
+    TaskType.CLIENT_APP: "--clientappio-api-address",
+    TaskType.CONNECTOR: "--serverappio-api-address",
+    TaskType.MODEL: "--serverappio-api-address",
+    TaskType.SERVER_APP: "--serverappio-api-address",
+    TaskType.SIMULATION: "--serverappio-api-address",
+}
+TASK_TYPE_TO_COMMAND: dict[TaskType, str] = {
+    TaskType.AGENT_APP: "flwr-agentapp",
+    TaskType.CLIENT_APP: "flwr-clientapp",
+    TaskType.CONNECTOR: "flwr-connector",
+    TaskType.MODEL: "flwr-model",
+    TaskType.SERVER_APP: "flwr-serverapp",
+    TaskType.SIMULATION: "flwr-simulation",
+}
+TASK_TYPES_ALLOWED_TO_CREATE_TASKS: frozenset[TaskType] = frozenset(
+    {
+        TaskType.AGENT_APP,
+        TaskType.SERVER_APP,
+        TaskType.CLIENT_APP,
+    }
+)
+TASK_TYPES_REQUIRING_FAB_HASH: frozenset[TaskType] = frozenset(
+    {
+        TaskType.SERVER_APP,
+        TaskType.CLIENT_APP,
+        TaskType.AGENT_APP,
+    }
+)
+TASK_TYPES_REQUIRING_MODEL_REF: frozenset[TaskType] = frozenset({TaskType.MODEL})
+TASK_TYPES_REQUIRING_CONNECTOR_REF: frozenset[TaskType] = frozenset(
+    {TaskType.CONNECTOR}
+)
+
+
+class ActionType(StrEnum):
     """Supported control action types."""
 
     REGISTER_SUPERNODE = "register_supernode"

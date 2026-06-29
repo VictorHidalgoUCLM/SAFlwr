@@ -19,7 +19,6 @@ package flwr.proto;
 
 import "flwr/proto/heartbeat.proto";
 import "flwr/proto/log.proto";
-import "flwr/proto/node.proto";
 import "flwr/proto/message.proto";
 import "flwr/proto/run.proto";
 import "flwr/proto/appio.proto";
@@ -30,12 +29,12 @@ service ServerAppIo {
   // General *AppIo endpoints for SuperExec processes
   /////////////////////////////////////////////////////////////////////////////
 
-  // List runs to launch
-  rpc ListAppsToLaunch(ListAppsToLaunchRequest)
-      returns (ListAppsToLaunchResponse) {}
+  // Pull pending tasks
+  rpc PullPendingTasks(PullPendingTasksRequest)
+      returns (PullPendingTasksResponse) {}
 
-  // Request token for a run
-  rpc RequestToken(RequestTokenRequest) returns (RequestTokenResponse) {}
+  // Claim task
+  rpc ClaimTask(ClaimTaskRequest) returns (ClaimTaskResponse) {}
 
   /////////////////////////////////////////////////////////////////////////////
   // General *AppIo endpoints for App Executor processes
@@ -44,15 +43,15 @@ service ServerAppIo {
   // Get run details
   rpc GetRun(GetRunRequest) returns (GetRunResponse) {}
 
-  // App heartbeat
-  rpc SendAppHeartbeat(SendAppHeartbeatRequest)
-      returns (SendAppHeartbeatResponse) {}
+  // Task heartbeat
+  rpc SendTaskHeartbeat(SendTaskHeartbeatRequest)
+      returns (SendTaskHeartbeatResponse) {}
 
-  // Pull app inputs
-  rpc PullAppInputs(PullAppInputsRequest) returns (PullAppInputsResponse) {}
+  // Pull task inputs
+  rpc PullTaskInput(PullTaskInputRequest) returns (PullTaskInputResponse) {}
 
-  // Push app outputs
-  rpc PushAppOutputs(PushAppOutputsRequest) returns (PushAppOutputsResponse) {}
+  // Push task outputs
+  rpc PushTaskOutput(PushTaskOutputRequest) returns (PushTaskOutputResponse) {}
 
   /////////////////////////////////////////////////////////////////////////////
   // Specific endpoints shared by ServerAppIo and ClientAppIo
@@ -68,31 +67,33 @@ service ServerAppIo {
   rpc ConfirmMessageReceived(ConfirmMessageReceivedRequest)
       returns (ConfirmMessageReceivedResponse) {}
 
-  /////////////////////////////////////////////////////////////////////////////
-  // Specific endpoints for ServerAppIo
-  /////////////////////////////////////////////////////////////////////////////
+  // Create a task
+  rpc CreateTask(CreateTaskRequest) returns (CreateTaskResponse) {}
 
-  // Get Federation Options (only used by flwr-simulation)
-  rpc GetFederationOptions(GetFederationOptionsRequest)
-      returns (GetFederationOptionsResponse) {}
+  // Push task message
+  rpc PushTaskMessage(PushTaskMessageRequest)
+      returns (PushTaskMessageResponse) {}
 
-  // Update the status of a given run
-  rpc UpdateRunStatus(UpdateRunStatusRequest)
-      returns (UpdateRunStatusResponse) {}
+  // Push task events
+  rpc PushTaskEvents(PushTaskEventsRequest) returns (PushTaskEventsResponse) {}
 
-  // Push ServerApp logs
+  // Pull task messages
+  rpc PullTaskMessage(PullTaskMessageRequest)
+      returns (PullTaskMessageResponse) {}
+
+  // Push task logs
   rpc PushLogs(PushLogsRequest) returns (PushLogsResponse) {}
 
-  // Create one or more messages
+  /////////////////////////////////////////////////////////////////////////////
+  // Message and node endpoints
+  /////////////////////////////////////////////////////////////////////////////
+
+  // Push messages
   rpc PushMessages(PushAppMessagesRequest) returns (PushAppMessagesResponse) {}
 
-  // Get message results
+  // Pull messages
   rpc PullMessages(PullAppMessagesRequest) returns (PullAppMessagesResponse) {}
 
   // Return a set of nodes
   rpc GetNodes(GetNodesRequest) returns (GetNodesResponse) {}
 }
-
-// GetNodes messages
-message GetNodesRequest { uint64 run_id = 1; }
-message GetNodesResponse { repeated Node nodes = 1; }

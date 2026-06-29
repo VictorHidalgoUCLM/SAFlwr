@@ -24,7 +24,6 @@ from typing import Any, NoReturn, Protocol, cast
 import grpc
 from google.protobuf.message import Message as GrpcMessage
 
-from flwr.common import now
 from flwr.supercore.auth import (
     compute_request_body_sha256,
     compute_superexec_signature,
@@ -39,6 +38,7 @@ from flwr.supercore.constant import (
     SUPEREXEC_AUTH_SIGNATURE_HEADER,
     SUPEREXEC_AUTH_TIMESTAMP_HEADER,
 )
+from flwr.supercore.date import now
 from flwr.supercore.utils import get_metadata_str
 
 from .appio_token_interceptor import AUTHENTICATION_FAILED_MESSAGE
@@ -47,6 +47,8 @@ SERVERAPPIO_SUPEREXEC_METHODS: frozenset[str] = frozenset(
     {
         "/flwr.proto.ServerAppIo/ListAppsToLaunch",
         "/flwr.proto.ServerAppIo/RequestToken",
+        "/flwr.proto.ServerAppIo/PullPendingTasks",
+        "/flwr.proto.ServerAppIo/ClaimTask",
         "/flwr.proto.ServerAppIo/GetRun",
     }
 )
@@ -55,6 +57,8 @@ CLIENTAPPIO_SUPEREXEC_METHODS: frozenset[str] = frozenset(
     {
         "/flwr.proto.ClientAppIo/ListAppsToLaunch",
         "/flwr.proto.ClientAppIo/RequestToken",
+        "/flwr.proto.ClientAppIo/PullPendingTasks",
+        "/flwr.proto.ClientAppIo/ClaimTask",
         "/flwr.proto.ClientAppIo/GetRun",
     }
 )

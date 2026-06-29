@@ -16,7 +16,8 @@
 
 from logging import ERROR
 
-from flwr.common import Message, log
+from flwr.app import Message
+from flwr.common import log
 from flwr.common.constant import (
     HEARTBEAT_MAX_INTERVAL,
     HEARTBEAT_MIN_INTERVAL,
@@ -30,7 +31,6 @@ from flwr.common.serde import (
     message_to_proto,
     run_to_proto,
 )
-from flwr.common.typing import InvalidRunStatusException, Run
 from flwr.proto.fab_pb2 import GetFabRequest, GetFabResponse  # pylint: disable=E0611
 from flwr.proto.fleet_pb2 import (  # pylint: disable=E0611
     ActivateNodeRequest,
@@ -64,6 +64,7 @@ from flwr.server.superlink.linkstate import LinkState
 from flwr.server.superlink.utils import check_abort
 from flwr.supercore.inflatable.inflatable_object import UnexpectedObjectContentError
 from flwr.supercore.object_store import NoObjectInStoreError, ObjectStore
+from flwr.supercore.run import InvalidRunStatusException, Run
 
 
 class InvalidHeartbeatIntervalError(Exception):
@@ -208,6 +209,16 @@ def push_messages(
         objects_to_push |= set(store.preregister(run_id, object_tree))
     # Store Message in State
     message_id: str | None = state.store_message_res(message=msg)
+    # This is temporary. We should consider a more robust cleanup
+    # mechanism that protects duplicate messages from premature deletion.
+    # Once that is in place, we can remove the run status check below.
+    if (
+        message_id is None
+        and state.get_run_status({run_id})[run_id].status == Status.FINISHED
+    ):
+        # The request currently contains only one message and its object tree.
+        store.delete(request.message_object_trees[0].object_id)
+        objects_to_push.clear()
 
     # Build response
     response = PushMessagesResponse(

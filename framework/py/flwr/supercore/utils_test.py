@@ -16,27 +16,47 @@
 
 
 import json
+import sys
 from typing import Any
 
 import pytest
 import requests
 from parameterized import parameterized
 
+from flwr.common.constant import NOOP_ACCOUNT_NAME, NOOP_FLWR_AID
 from flwr.proto.federation_config_pb2 import SimulationConfig  # pylint: disable=E0611
 
 from .utils import (
+    MetadataLookupError,
+    find_metadata_keys,
     get_metadata_bytes,
     get_metadata_str,
+    get_metadata_str_checked,
     humanize_bytes,
     humanize_duration,
     int64_to_uint64,
     mask_string,
     parse_app_spec,
     request_download_link,
+    resolve_account_ids,
     simulation_config_from_json,
     simulation_config_to_json,
+    strict_json_dumps,
+    strict_json_loads,
     uint64_to_int64,
 )
+
+
+def test_find_metadata_keys() -> None:
+    """Return the subset of requested keys present in metadata."""
+    assert find_metadata_keys(
+        [
+            ("x-token", "value"),
+            ("x-trace-id", "abc"),
+            ("x-token", "other"),
+        ],
+        ("x-token", "missing"),
+    ) == {"x-token"}
 
 
 def test_mask_string() -> None:
@@ -48,6 +68,39 @@ def test_mask_string() -> None:
     assert mask_string("") == ""
     assert mask_string("1234567890", head=2, tail=3) == "12...890"
     assert mask_string("1234567890", head=5, tail=4) == "12345...7890"
+
+
+def test_resolve_account_ids_without_ee(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Resolve the noop account id and ignore unknown ids."""
+    monkeypatch.setitem(sys.modules, "flwr.ee", None)
+    monkeypatch.setitem(sys.modules, "flwr.ee.utils", None)
+    assert resolve_account_ids([NOOP_FLWR_AID, "unknown"]) == {
+        NOOP_FLWR_AID: NOOP_ACCOUNT_NAME
+    }
+
+
+def test_strict_json_loads() -> None:
+    """Parse valid JSON values."""
+    assert strict_json_loads('{"key":[1,true,null]}') == {"key": [1, True, None]}
+
+
+def test_strict_json_loads_rejects_non_finite_numbers() -> None:
+    """Reject Python's non-standard JSON number constants."""
+    with pytest.raises(ValueError, match="non-finite number NaN"):
+        strict_json_loads('{"key":NaN}')
+
+
+def test_strict_json_dumps() -> None:
+    """Serialize valid JSON values."""
+    assert strict_json_dumps({"key": [1, True, None]}, compact=True) == (
+        '{"key":[1,true,null]}'
+    )
+
+
+def test_strict_json_dumps_rejects_non_finite_numbers() -> None:
+    """Reject non-finite floating-point values."""
+    with pytest.raises(ValueError, match="Out of range float values"):
+        strict_json_dumps({"key": float("nan")})
 
 
 @pytest.mark.parametrize(
@@ -70,6 +123,33 @@ def test_get_metadata_str(
 ) -> None:
     """Return exactly one non-empty string value of the expected type."""
     assert get_metadata_str(metadata, key) == expected
+
+
+@pytest.mark.parametrize(
+    ("metadata", "key", "expected_value", "expected_error"),
+    [
+        ([("x-token", "value")], "x-token", "value", None),
+        ([("x-token", "")], "x-token", None, "empty"),
+        ([("x-token", "value"), ("x-token", "other")], "x-token", None, "duplicate"),
+        ([("x-token", b"value")], "x-token", None, "wrong_type"),
+        ([("other", "value")], "x-token", None, "missing"),
+    ],
+)
+def test_get_metadata_str_checked(
+    metadata: list[tuple[str, str | bytes]],
+    key: str,
+    expected_value: str | None,
+    expected_error: str | None,
+) -> None:
+    """Preserve metadata validation outcomes for callers that need them."""
+    value, error_type = None, None
+    try:
+        value = get_metadata_str_checked(metadata, key)
+    except MetadataLookupError as e:
+        error_type = e.error_type
+
+    assert value == expected_value
+    assert error_type == expected_error
 
 
 @pytest.mark.parametrize(

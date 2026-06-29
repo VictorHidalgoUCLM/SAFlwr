@@ -18,11 +18,11 @@
 from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING
 
-from flwr.common.typing import Federation
 from flwr.proto.federation_config_pb2 import SimulationConfig  # pylint: disable=E0611
 from flwr.proto.federation_pb2 import Invitation  # pylint: disable=E0611
 from flwr.supercore.constant import ActionType
 from flwr.supercore.typing import ActionContext
+from flwr.superlink.federation.typing import Federation
 
 if TYPE_CHECKING:
     from flwr.server.superlink.linkstate.linkstate import LinkState
@@ -59,6 +59,16 @@ class FederationManager(ABC):
     @abstractmethod
     def has_node(self, node_id: int, federation: str) -> bool:
         """Given a node ID, check if it is in the federation."""
+
+    @abstractmethod
+    def ensure_default_federations_exist(self, flwr_aid: str) -> None:
+        """Ensure default federations exist for the given account.
+
+        Parameters
+        ----------
+        flwr_aid : str
+            The ID of the account for which default federations should exist.
+        """
 
     @abstractmethod
     def get_federations(self, flwr_aid: str) -> list[Federation]:
@@ -336,7 +346,7 @@ class FederationManager(ABC):
     @abstractmethod
     def can_execute(
         self, flwr_aid: str, action: ActionType, context: ActionContext
-    ) -> bool:
+    ) -> None:
         """Check if an account can execute an action under a given context.
 
         Parameters
@@ -348,8 +358,8 @@ class FederationManager(ABC):
         context : ActionContext
             Action-specific context required for authorization.
 
-        Returns
-        -------
-        bool
-            ``True`` if the action is allowed, otherwise ``False``.
+        Raises
+        ------
+        EntitlementError
+            If the action is not allowed under the given entitlement context.
         """
