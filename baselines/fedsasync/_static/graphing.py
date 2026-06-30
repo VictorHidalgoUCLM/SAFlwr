@@ -122,6 +122,10 @@ def generate_comparison_plots():
 
     results_df = pd.DataFrame(results)
 
+    if results_df.empty:
+        print("No result CSVs found under _static; skipping table generation.")
+        return
+
     print("Table plot.")
 
     # Get all datasets

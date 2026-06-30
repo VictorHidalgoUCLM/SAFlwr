@@ -129,17 +129,12 @@ class FedSaSync(FedAvg):
             A tuple containing the sampled node IDs and the list
             of all connected node IDs.
         """
-        all_nodes = list(grid.get_node_ids())   # Get all available nodes in grid
-        running_nodes = list(map(int, msg_dict.keys())) # Get all nodes that are currently running
-        free_nodes = list(set(all_nodes) - set(running_nodes))
-        # Sample nodes that are not currently running
-        random.seed(42)
+        all_nodes = list(grid.get_node_ids())  # Get all available nodes in grid
+        running_nodes = list(map(int, msg_dict.keys()))  # Get all nodes that are currently running
+        free_nodes = sorted(set(all_nodes) - set(running_nodes))
 
-        # Sample only from free nodes, up to the specified sample size
-        sampled_nodes = random.sample(
-            free_nodes,
-            min(len(free_nodes), sample_size)
-        )
+        rng = random.Random(42)
+        sampled_nodes = rng.sample(free_nodes, min(len(free_nodes), sample_size))
         return sampled_nodes, all_nodes
 
 
