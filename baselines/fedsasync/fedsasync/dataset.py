@@ -33,7 +33,8 @@ def load_data(
         pytorch_transforms = Compose(
             [ToTensor(), Normalize((0.1307,), (0.3081,))]
         )
-
+    else:
+        raise ValueError(f"Unknown dataset: {dataset_name}")
     def apply_transforms(batch):
         """Apply transforms to the partition from FederatedDataset."""
         image = "img" if dataset_name == "uoft-cs/cifar10" else "image"

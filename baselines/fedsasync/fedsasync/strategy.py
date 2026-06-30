@@ -63,7 +63,7 @@ class FedSaSync(FedAvg):
         average using the provided weight factor key.
     strategy_name : str (default: "FedAvg")
         Name of the strategy.
-    semiasync_deg : int (default: 8)
+    semiasync_deg : int (default: 10)
         Degree of semi-asynchrony.
     """
 

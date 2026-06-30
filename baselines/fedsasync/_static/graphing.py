@@ -99,8 +99,9 @@ def generate_comparison_plots():
         handles, labels = axes[0].get_legend_handles_labels()
 
         order = list(range(len(labels)))
-        fedavg_idx = labels.index("FedAvg")
-        order = [i for i in order if i != fedavg_idx] + [fedavg_idx]
+        if "FedAvg" in labels:
+            fedavg_idx = labels.index("FedAvg")
+            order = [i for i in order if i != fedavg_idx] + [fedavg_idx]
 
         fig.legend(
             [handles[i] for i in order],
@@ -138,10 +139,9 @@ def generate_comparison_plots():
 
         # Column separation
         cols = list(table_data.columns)
-        # Extract FedAvg (m=0) if exists
+        # Reorder columns and keep FedAvg (m=0) last, if present
         cols_no_fedavg = [c for c in cols if c != 0]
-        # Reorder: all + FedAvg at the end
-        new_order = cols_no_fedavg + [0]
+        new_order = cols_no_fedavg + ([0] if 0 in cols else [])
         table_data = table_data[new_order]
 
         col_labels = [
