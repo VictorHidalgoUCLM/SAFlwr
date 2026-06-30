@@ -33,6 +33,7 @@ def load_data(
         pytorch_transforms = Compose(
             [ToTensor(), Normalize((0.1307,), (0.3081,))]
         )
+
     def apply_transforms(batch):
         """Apply transforms to the partition from FederatedDataset."""
         image = "img" if dataset_name == "uoft-cs/cifar10" else "image"
@@ -44,11 +45,11 @@ def load_data(
         partition_train_test["train"],
         batch_size=32,
         shuffle=True,
-        generator=torch.Generator().manual_seed(42)
+        generator=torch.Generator().manual_seed(42),
     )
     testloader = DataLoader(
         partition_train_test["test"],
         batch_size=32,
-        generator=torch.Generator().manual_seed(42)
+        generator=torch.Generator().manual_seed(42),
     )
     return trainloader, testloader

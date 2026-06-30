@@ -129,8 +129,9 @@ class FedSaSync(FedAvg):
             A tuple containing the sampled node IDs and the list
             of all connected node IDs.
         """
-        all_nodes = list(grid.get_node_ids())  # Get all available nodes in grid
-        running_nodes = list(map(int, msg_dict.keys()))  # Get all nodes that are currently running
+        all_nodes = list(grid.get_node_ids())
+        # Nodes that are currently running (have an in-flight message)
+        running_nodes = [int(node_id) for node_id in msg_dict]
         free_nodes = sorted(set(all_nodes) - set(running_nodes))
 
         rng = random.Random(42)
@@ -192,7 +193,8 @@ class FedSaSync(FedAvg):
         received or the specified timeout duration is exceeded.
         """
         # Push messages
-        msg_ids = grid.push_messages(messages)
+        messages = list(messages)
+        msg_ids = list(grid.push_messages(messages))
 
         # Register busy nodes in msg_dict
         if msg_dict is None:
@@ -200,7 +202,7 @@ class FedSaSync(FedAvg):
 
         for msg_id, msg in zip(msg_ids, messages):
             node_id = str(msg.metadata.dst_node_id)
-            msg_dict[node_id] = msg_id # node_id: msg_id
+            msg_dict[node_id] = msg_id  # node_id: msg_id
         del messages
 
         # Debug mode: print the msg_dict after pushing messages

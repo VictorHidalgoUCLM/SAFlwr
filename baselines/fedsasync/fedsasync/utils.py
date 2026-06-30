@@ -31,6 +31,7 @@ def train_metrics_aggr_fn(
     aggregated_metrics["qtty_records"] = len(records)
     return aggregated_metrics
 
+
 def save_logs(
     result: Result,
     strategy_name: str,

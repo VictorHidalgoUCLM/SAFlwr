@@ -51,8 +51,7 @@ dataset: [CIFAR10, MNIST]
 | slow clients            | 0                                                  |
 | semiasynchronous degree | 10                                                 |
 | dataset name            | "uoft-cs/cifar10"                                  |
-| learning rate           | 0.01                                               |
-
+| learning rate           | 0.01 (CIFAR10) / 0.05 (MNIST; set in `model.py`)    |
 **Experiment configurations:** The following table shows the configurations to be used on the experiments, defined in `run_cifar10_experiments.sh` and `run_mnist_experiments.sh` (these configurations will later overwrite the default values with the `--run-config` option during `flwr run .`)
 | dataset name     | slow clients  | semiasynchronous degree | number of rounds                  | learning rate                     |
 | ---------------- | ------------- | ----------------------- | --------------------------------- | --------------------------------- |

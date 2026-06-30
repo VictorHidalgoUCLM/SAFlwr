@@ -14,6 +14,7 @@ M_VALUES = [0, 7, 8, 9, 10]
 # Root directory where the results are stored (this file lives in that directory)
 BASE_PATH = os.path.abspath(os.path.dirname(__file__))
 
+
 def generate_comparison_plots():
     """Iterate through datasets and fs values to create comparison plots of 'm' values
     (Time vs Loss)."""
