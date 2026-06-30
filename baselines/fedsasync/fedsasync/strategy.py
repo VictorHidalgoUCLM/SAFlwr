@@ -223,7 +223,7 @@ class FedSaSync(FedAvg):
             )
             # Round end condition
             if not last_round:  # If not last round, continue if at least M replies are received
-                if len(ret) >= sync_deg:
+                if len(ret) >= sync_deg or len(all_msg_ids) == 0:
                     break
             else:   # If last round, wait all executing clients
                 if len(all_msg_ids) == 0:
