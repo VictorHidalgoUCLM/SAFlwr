@@ -209,7 +209,8 @@ class FedSaSync(FedAvg):
         # print("msg_dict:", msg_dict)
 
         # Pull messages
-        all_msg_ids = set(msg_dict.values())    # Get all message IDs that are currently running
+        # Get all message IDs that are currently running
+        all_msg_ids = set(msg_dict.values())
         end_time = time.time() + (timeout if timeout is not None else 0.0)
         ret: list[Message] = []
         while timeout is None or time.time() < end_time:
@@ -219,10 +220,10 @@ class FedSaSync(FedAvg):
                 {msg.metadata.reply_to_message_id for msg in res_msgs}
             )
             # Round end condition
-            if not last_round:  # If not last round, continue if at least M replies are received
+            if not last_round:
                 if len(ret) >= sync_deg or len(all_msg_ids) == 0:
                     break
-            else:   # If last round, wait all executing clients
+            else:
                 if len(all_msg_ids) == 0:
                     break
             # Sleep

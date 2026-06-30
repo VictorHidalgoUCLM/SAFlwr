@@ -35,8 +35,8 @@ def load_data(
         )
     else:
         raise ValueError(f"Unknown dataset: {dataset_name}")
+
     def apply_transforms(batch):
-        """Apply transforms to the partition from FederatedDataset."""
         image = "img" if dataset_name == "uoft-cs/cifar10" else "image"
         batch[image] = [pytorch_transforms(img) for img in batch[image]]
         return batch
