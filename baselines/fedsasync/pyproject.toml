@@ -129,7 +129,6 @@ fab-exclude = [
     "_static/**",
     ".mypy_cache/**",
     ".pytest_cache/**",
-    ".ruff_cache/**",
 ]
 
 # Point to your ServerApp and ClientApp objects
