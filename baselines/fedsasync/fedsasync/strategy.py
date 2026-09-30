@@ -2,6 +2,7 @@
 import io
 import random
 import time
+from collections import defaultdict
 from collections.abc import Callable, Iterable
 from logging import INFO
 from typing import Dict
@@ -21,12 +22,10 @@ from flwr.serverapp.strategy.result import Result
 from flwr.serverapp.strategy.strategy_utils import log_strategy_start_info
 
 from .utils import save_logs
-
+import psutil
 
 class FedSaSync(FedAvg):
     """Federated Semi-Asynchronous strategy.
-
-    Implementation based on 'TODO'
 
     Parameters
     ----------
@@ -63,8 +62,18 @@ class FedSaSync(FedAvg):
         average using the provided weight factor key.
     strategy_name : str (default: "FedAvg")
         Name of the strategy.
-    semiasync_deg : int (default: 8)
+    semiasync_deg : int (default: 10)
         Degree of semi-asynchrony.
+    fraction_slow : float (default: 0.0)
+        Fraction of straggler/slow nodes simulated in the system.
+    dataset_name : str (default: "uoft-cs/cifar10")
+        Identifier of the dataset used for training and evaluation.
+    data_distribution : str (default: "iid")
+        Type of data partition/distribution across nodes (e.g., "iid", "dirichlet").
+    num_rounds : int (default: 1)
+        Total number of federated learning rounds to execute.
+    run_id : int (default: 1)
+        Identifier for the specific experiment run.
     """
 
     # pylint: disable=too-many-arguments,too-many-positional-arguments
@@ -82,12 +91,14 @@ class FedSaSync(FedAvg):
         train_metrics_aggr_fn=None,
         evaluate_metrics_aggr_fn=None,
 
-        # Additional parameters for FedSaSync if needed
+        # Additional parameters for FedSaSync
         strategy_name: str = "FedAvg",
         semiasync_deg: int = 10,
-        number_slow: int = 0,
+        fraction_slow: float = 0.0,
         dataset_name: str = "uoft-cs/cifar10",
-
+        data_distribution: str = "iid",
+        num_rounds: int = 1,
+        run_id: int = 1,
     ) -> None:
         super().__init__(
             fraction_train=fraction_train,
@@ -102,11 +113,18 @@ class FedSaSync(FedAvg):
             evaluate_metrics_aggr_fn=evaluate_metrics_aggr_fn,
         )
 
-        # Additional initialization for FedSaSync if needed
+        # Additional initialization for FedSaSync
         self.strategy_name = strategy_name
         self.semiasync_deg = semiasync_deg
-        self.number_slow = number_slow
+        self.fraction_slow = fraction_slow
         self.dataset_name = dataset_name
+        self.data_distribution = data_distribution
+        self.total_rounds = num_rounds
+        self.run_id = run_id
+
+        # Global counter for client staleness
+        self.client_staleness = defaultdict(lambda: [0] * self.total_rounds)
+        self.metrics = defaultdict(float)
 
 
     def sample_nodes_semiasync(
@@ -133,7 +151,7 @@ class FedSaSync(FedAvg):
         running_nodes = list(map(int, msg_dict.keys())) # Get all nodes that are currently running
         free_nodes = list(set(all_nodes) - set(running_nodes))
         # Sample nodes that are not currently running
-        random.seed(42)
+        random.seed(42 + self.run_id)
 
         # Sample only from free nodes, up to the specified sample size
         sampled_nodes = random.sample(
@@ -162,6 +180,7 @@ class FedSaSync(FedAvg):
 
         if msg_dict is None:
             msg_dict = {}
+
         node_ids, num_total = self.sample_nodes_semiasync(grid, msg_dict, sample_size)
 
         log(
@@ -177,7 +196,12 @@ class FedSaSync(FedAvg):
         record = RecordDict(
             {self.arrayrecord_key: arrays, self.configrecord_key: config}
         )
-        return self._construct_messages(record, node_ids, MessageType.TRAIN)
+
+        # Add current round metadata to sent messages
+        messages = self._construct_messages(record, node_ids, MessageType.TRAIN)
+        for msg in messages:
+            msg.metadata.group_id = str(server_round)
+        return messages
 
 
     def send_and_receive_semiasync(
@@ -185,9 +209,11 @@ class FedSaSync(FedAvg):
         grid: Grid,
         messages: Iterable[Message],
         timeout: float | None = None,
+        current_round: int = 1,
         msg_dict: Dict[str, str] | None = None,
         sync_deg: int = 1,
         last_round: bool = False,
+        polling_interval: float = 0.5,
     ) -> Iterable[Message]:
         """Push messages to specified node IDs and pull semiasynchronously 'M' reply
         messages.
@@ -196,6 +222,14 @@ class FedSaSync(FedAvg):
         waits for 'M' replies. It continues to pull replies until either M replies are
         received or the specified timeout duration is exceeded.
         """
+        process = psutil.Process()
+        cpu_start = process.cpu_times()
+        start_time = time.perf_counter()
+
+        polling_calls = 0
+        time_in_pull = 0.0
+        time_in_sleep = 0.0
+
         # Push messages
         msg_ids = grid.push_messages(messages)
 
@@ -212,11 +246,15 @@ class FedSaSync(FedAvg):
         # print("msg_dict:", msg_dict)
 
         # Pull messages
-        all_msg_ids = set(msg_dict.values())    # Get all message IDs that are currently running
+        all_msg_ids = set(msg_dict.values())    # Get all message IDs that are currently runnin
         end_time = time.time() + (timeout if timeout is not None else 0.0)
         ret: list[Message] = []
         while timeout is None or time.time() < end_time:
+            pull_start = time.perf_counter()
             res_msgs = grid.pull_messages(all_msg_ids)  # Pull all messages in grid
+            time_in_pull += time.perf_counter() - pull_start
+            polling_calls += 1
+
             ret.extend(res_msgs)
             all_msg_ids.difference_update(
                 {msg.metadata.reply_to_message_id for msg in res_msgs}
@@ -228,13 +266,40 @@ class FedSaSync(FedAvg):
             else:   # If last round, wait all executing clients
                 if len(all_msg_ids) == 0:
                     break
-            # Sleep
-            time.sleep(3)
+
+            # Measure sleep time
+            sleep_start = time.perf_counter()
+            time.sleep(polling_interval)
+            time_in_sleep += time.perf_counter() - sleep_start
 
         # Update msg_dict to remove unnecessary entries
         for node_id in list(msg_dict.keys()):
             if msg_dict[node_id] not in all_msg_ids:
                 del msg_dict[node_id]
+
+        # Final calculation of metrics
+        total_time = time.perf_counter() - start_time
+        cpu_end = process.cpu_times()
+
+        # Real CPU usage time used by the server thread (User + System)
+        server_cpu_time = (cpu_end.user - cpu_start.user) + (
+            cpu_end.system - cpu_start.system
+        )
+
+        self.metrics["polling_calls_count"] += polling_calls
+        self.metrics["time_in_pull_sec"] += time_in_pull
+        self.metrics["server_cpu_time_sec"] += server_cpu_time
+        self.metrics["messages_received_count"] += len(ret)
+        self.metrics["total_time"] += total_time
+
+        # Update client participation counts (fairness)
+        for msg in ret:
+            metrics = msg.content["metrics"]
+            partition_id = int(metrics.pop("partition-id", -1))
+
+            # Add padding zeros according to the delay followed by the actual staleness value
+            staleness = current_round - int(msg.metadata.group_id)
+            self.client_staleness[partition_id][current_round - 1] = staleness
 
         # Debug mode: print the msg_dict after pulling messages
         # print("msg_dict after pulling:", msg_dict)
@@ -251,6 +316,7 @@ class FedSaSync(FedAvg):
         train_config: ConfigRecord | None = None,
         evaluate_config: ConfigRecord | None = None,
         evaluate_fn: Callable[[int, ArrayRecord], MetricRecord | None] | None = None,
+        polling_interval: float = 0.5,
     ) -> Result:
         """Execute the federated learning strategy.
 
@@ -346,9 +412,11 @@ class FedSaSync(FedAvg):
                     msg_dict,
                 ),
                 timeout=timeout,
+                current_round=current_round,
                 msg_dict=msg_dict,
                 sync_deg=sync_deg,
                 last_round=last_round,
+                polling_interval=polling_interval,
             )
 
             # Aggregate train
@@ -387,6 +455,7 @@ class FedSaSync(FedAvg):
             )
             if agg_evaluate_metrics is None:
                 agg_evaluate_metrics = MetricRecord()
+            # Add extra metrics
             agg_evaluate_metrics["time"] = time.time() - t_start
 
             # Log training metrics and append to history
@@ -414,13 +483,18 @@ class FedSaSync(FedAvg):
         for line in io.StringIO(str(result)):
             log(INFO, "\t%s", line.strip("\n"))
         log(INFO, "")
-
+        
         # Call utility function to save logs
         save_logs(
             result,
             self.strategy_name,
             self.semiasync_deg,
-            self.number_slow,
-            self.dataset_name
+            self.fraction_slow,
+            self.dataset_name,
+            self.total_rounds,
+            self.run_id,
+            self.client_staleness,
+            self.metrics,
+            self.data_distribution,
         )
         return result

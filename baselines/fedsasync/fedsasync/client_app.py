@@ -20,8 +20,12 @@ def train(msg: Message, context: Context):
     """Train the model on local data."""
     # Init_time counter
     init_time = time.perf_counter()
+
     # Load the model and initialize it with the received weights
     dataset_name = str(context.run_config["dataset-name"])
+    data_distribution = str(context.run_config["data-distribution"])
+    run_id = int(context.run_config["run-id"])
+
     if dataset_name == "uoft-cs/cifar10":
         model = Net()
     elif dataset_name == "ylecun/mnist":
@@ -36,11 +40,13 @@ def train(msg: Message, context: Context):
     # Load the data
     partition_id = int(context.node_config["partition-id"])
     num_partitions = int(context.node_config["num-partitions"])
-    trainloader, _ = load_data(partition_id, num_partitions, dataset_name)
+    trainloader, _ = load_data(partition_id, num_partitions, dataset_name, data_distribution, run_id)
     local_epochs = context.run_config["local-epochs"]
 
-    # Probability of being a slow client, for simulating stragglers in FedSaSync
-    number_slow = int(context.run_config["number-slow"])
+    # Slow client, for simulating stragglers in FedSaSync
+    fraction_slow = float(context.run_config["fraction-slow"])
+    number_slow = round(fraction_slow * num_partitions)
+
     if partition_id < number_slow:
         time.sleep(5)
 
@@ -61,6 +67,7 @@ def train(msg: Message, context: Context):
         "train_loss": train_loss,
         "num-examples": len(trainloader.dataset),
         "train_time": end_time - init_time,
+        "partition-id": partition_id,
     }
     metric_record = MetricRecord(metrics)
     content = RecordDict({"arrays": model_record, "metrics": metric_record})
@@ -72,6 +79,8 @@ def evaluate(msg: Message, context: Context):
     """Evaluate the model on local data."""
     # Load the model and initialize it with the received weights
     dataset_name = str(context.run_config["dataset-name"])
+    run_id = int(context.run_config["run-id"])
+
     if dataset_name == "uoft-cs/cifar10":
         model = Net()
         image = "img"
@@ -88,7 +97,7 @@ def evaluate(msg: Message, context: Context):
     # Load the data
     partition_id = int(context.node_config["partition-id"])
     num_partitions = int(context.node_config["num-partitions"])
-    _, valloader = load_data(partition_id, num_partitions, dataset_name)
+    _, valloader = load_data(partition_id, num_partitions, dataset_name, run_id)
 
     # Call the evaluation function
     eval_loss, eval_acc = test_fn(model, valloader, device, image)

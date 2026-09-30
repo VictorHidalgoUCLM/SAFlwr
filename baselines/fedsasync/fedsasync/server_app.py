@@ -23,10 +23,13 @@ def main(grid: Grid, context: Context) -> None:
     strategy_name: str = str(context.run_config["name"])
     semiasync_deg: int = int(context.run_config["semiasync-deg"])
     dataset_name: str = str(context.run_config["dataset-name"])
-    number_slow: int = int(context.run_config["number-slow"])
+    data_distribution: str = str(context.run_config["data-distribution"])
+    fraction_slow: float = float(context.run_config["fraction-slow"])
+    polling_interval: float = float(context.run_config["polling-interval"])
+    run_id: int = int(context.run_config["run-id"])
 
     # Load global model
-    torch.manual_seed(42)
+    torch.manual_seed(42 + run_id)
     if dataset_name == "uoft-cs/cifar10":
         global_model = Net()
     elif dataset_name == "ylecun/mnist":
@@ -42,9 +45,12 @@ def main(grid: Grid, context: Context) -> None:
         min_available_nodes=2,
         strategy_name=strategy_name,
         semiasync_deg=semiasync_deg,
-        number_slow=number_slow,
+        fraction_slow=fraction_slow,
         dataset_name=dataset_name,
+        data_distribution=data_distribution,
         train_metrics_aggr_fn=train_metrics_aggr_fn,
+        num_rounds=num_rounds,
+        run_id=run_id,
     )
 
     # Start strategy, run FedSaSync for `num_rounds`
@@ -52,4 +58,5 @@ def main(grid: Grid, context: Context) -> None:
         grid=grid,
         initial_arrays=arrays,
         num_rounds=num_rounds,
+        polling_interval=float(polling_interval)
     )
