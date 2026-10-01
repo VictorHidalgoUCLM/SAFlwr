@@ -667,7 +667,7 @@ def generate_efficiency_table(base_path: str, datasets: list, data_dists: list, 
                 if fs_idx > 0:
                     latex_lines.append(r"\par\vspace{0.8em}")
                 
-                latex_lines.append(f"\\noindent\\textbf{{Slow = {fs}}} \\\\[0.2em]")
+                latex_lines.append(f"\\noindent\\textbf{{Slow = {int(round(fs * 100))}\\%}} \\\\[0.2em]")
                 latex_lines.append(r"\resizebox{\textwidth}{!}{%")
                 latex_lines.append(r"\begin{tabular}{lcccccc}")
                 latex_lines.append(r"\hline")
@@ -844,7 +844,7 @@ def generate_scheduler_metrics_table(base_path: str, datasets: list, data_dists:
                 if fs_idx > 0:
                     latex_lines.append(r"\par\vspace{0.8em}")
                 
-                latex_lines.append(f"\\noindent\\textbf{{Slow = {fs}}} \\\\[0.2em]")
+                latex_lines.append(f"\\noindent\\textbf{{Slow = {int(round(fs * 100))}\\%}} \\\\[0.2em]")
                 latex_lines.append(r"\resizebox{\textwidth}{!}{%")
                 col_spec = "l" + "".join(["c"] * num_metrics)
                 latex_lines.append(f"\\begin{{tabular}}{{{col_spec}}}")

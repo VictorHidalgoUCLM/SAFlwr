@@ -93,7 +93,7 @@ class FedSaSync(FedAvg):
 
         # Additional parameters for FedSaSync
         strategy_name: str = "FedAvg",
-        semiasync_deg: int = 10,
+        semiasync_deg: int = 20,
         fraction_slow: float = 0.0,
         dataset_name: str = "uoft-cs/cifar10",
         data_distribution: str = "iid",
